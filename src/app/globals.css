@@ -129,6 +129,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    animation: none !important;
+  }
+}
+
 @media print {
   header,
   nav,

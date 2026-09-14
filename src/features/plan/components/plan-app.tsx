@@ -1,14 +1,15 @@
 "use client";
 
-import Image from "next/image";
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import { VALID_VIEWS, VIEW_LABELS } from "../constants";
 import { usePlan } from "../hooks/use-plan";
 import { filterActions, uniqueResponsaveis, countByStatus } from "../lib/filters";
 import type { ActionItem, ViewMode } from "../types";
 import { PlanFiltersBar, usePlanFilters } from "./plan-filters";
-import { PlanToolbar } from "./plan-toolbar";
+import { PlanHeader } from "./plan-header";
+import { PlanViewNav } from "./plan-view-nav";
 import { DashboardView } from "./dashboard-view";
 import { TableView } from "./table-view";
 import { KanbanView } from "./kanban-view";
@@ -16,8 +17,6 @@ import { CronogramaView } from "./cronograma-view";
 import { HistoryView } from "./history-view";
 import { ActionDetailDialog } from "./action-detail-dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 
 const viewParser = parseAsStringEnum<ViewMode>([...VALID_VIEWS]).withDefault(
   "dashboard"
@@ -29,6 +28,16 @@ export function PlanApp() {
   const filters = usePlanFilters();
   const deferredSearch = useDeferredValue(filters.search);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const filterValues = useMemo(
     () => ({
@@ -73,6 +82,10 @@ export function PlanApp() {
     await setViewQuery(next);
   }
 
+  function goHome() {
+    void changeView("dashboard");
+  }
+
   if (!ready) {
     return (
       <div className="mx-auto max-w-6xl p-6 text-sm text-muted-foreground">
@@ -81,64 +94,37 @@ export function PlanApp() {
     );
   }
 
+  const isHome = view === "dashboard";
+
   return (
     <div className="min-h-dvh bg-background">
-      <header className="sticky top-0 z-40 border-b bg-card/95 backdrop-blur print:hidden">
-        <div className="mx-auto flex max-w-[1820px] flex-col gap-3 px-3 py-3 sm:px-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="rounded-md bg-white px-2 py-1 shadow-sm ring-1 ring-border/60">
-                <Image
-                  src="/logo-codeba.png"
-                  alt="Autoridade Portuária CODEBA"
-                  width={160}
-                  height={40}
-                  className="h-7 w-auto sm:h-9"
-                  priority
-                />
-              </div>
-              <div className="min-w-0">
-                <h1 className="truncate text-base font-semibold tracking-tight sm:text-lg">
-                  Plano de Ação SCI/EOR — CODEBA
-                </h1>
-                <p className="truncate text-xs text-muted-foreground sm:text-sm">
-                  NO.S8.8.DIP.01 · Acompanhamento da revisão normativa
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="secondary" className="font-medium">
-                Progresso {progress}%
-              </Badge>
-              <PlanToolbar />
-            </div>
-          </div>
-        </div>
-      </header>
+      <PlanHeader
+        view={view}
+        progress={progress}
+        scrolled={scrolled}
+        onHome={goHome}
+      />
 
       <main className="mx-auto grid max-w-[1820px] gap-4 px-3 py-4 sm:px-4">
-        <nav
-          className="flex gap-1 overflow-x-auto rounded-xl border bg-card p-1 print:hidden"
-          aria-label="Modos de visualização"
-        >
-          {VALID_VIEWS.map((item) => (
+        <PlanViewNav view={view} onChange={(next) => void changeView(next)} />
+
+        {!isHome && (
+          <div className="flex items-center justify-between gap-2 print:hidden">
+            <h2 className="text-lg font-semibold tracking-tight">
+              {VIEW_LABELS[view]}
+            </h2>
             <Button
-              key={item}
               type="button"
+              variant="ghost"
               size="sm"
-              variant={view === item ? "default" : "ghost"}
-              className={cn(
-                "shrink-0",
-                view === item && "pointer-events-none"
-              )}
-              aria-pressed={view === item}
-              onClick={() => void changeView(item)}
+              className="h-10 shrink-0 gap-1.5 sm:h-8"
+              onClick={goHome}
             >
-              {VIEW_LABELS[item]}
+              <ArrowLeft className="size-3.5" />
+              Visão geral
             </Button>
-          ))}
-        </nav>
+          </div>
+        )}
 
         {view !== "history" && (
           <div className="print:hidden">
@@ -146,19 +132,28 @@ export function PlanApp() {
           </div>
         )}
 
-        {view === "dashboard" && (
-          <DashboardView actions={filtered} onOpen={setOpenId} />
-        )}
-        {view === "table" && (
-          <TableView actions={filtered} onOpen={setOpenId} />
-        )}
-        {view === "kanban" && (
-          <KanbanView actions={filtered} onOpen={setOpenId} />
-        )}
-        {view === "cronograma" && (
-          <CronogramaView actions={filtered} onOpen={setOpenId} />
-        )}
-        {view === "history" && <HistoryView />}
+        <div
+          key={view}
+          className="animate-in fade-in-0 duration-200 motion-reduce:animate-none"
+        >
+          {view === "dashboard" && (
+            <DashboardView
+              actions={filtered}
+              onOpen={setOpenId}
+              onNavigate={(next) => void changeView(next)}
+            />
+          )}
+          {view === "table" && (
+            <TableView actions={filtered} onOpen={setOpenId} />
+          )}
+          {view === "kanban" && (
+            <KanbanView actions={filtered} onOpen={setOpenId} />
+          )}
+          {view === "cronograma" && (
+            <CronogramaView actions={filtered} onOpen={setOpenId} />
+          )}
+          {view === "history" && <HistoryView />}
+        </div>
       </main>
 
       <datalist id="responsaveis-list">

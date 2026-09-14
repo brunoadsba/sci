@@ -117,6 +117,7 @@ export function PlanToolbar() {
           type="button"
           variant="outline"
           size="icon-sm"
+          className="size-10 sm:size-8"
           disabled={!canUndo}
           onClick={undo}
           aria-label="Desfazer"
@@ -127,6 +128,7 @@ export function PlanToolbar() {
           type="button"
           variant="outline"
           size="icon-sm"
+          className="size-10 sm:size-8"
           disabled={!canRedo}
           onClick={redo}
           aria-label="Refazer"
@@ -136,8 +138,11 @@ export function PlanToolbar() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button type="button" variant="outline" size="sm">
-              <Download /> Exportar <ChevronDown />
+            <Button type="button" variant="outline" size="sm" className="h-10 sm:h-8">
+              <Download />
+              <span className="hidden sm:inline">Exportar</span>
+              <ChevronDown className="hidden sm:inline" />
+              <span className="sr-only sm:hidden">Exportar</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -168,13 +173,26 @@ export function PlanToolbar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button type="button" variant="outline" size="icon-sm" onClick={toggleTheme} aria-label="Alternar tema">
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          className="size-10 sm:size-8"
+          onClick={toggleTheme}
+          aria-label="Alternar tema"
+        >
           {resolvedTheme === "dark" ? <Sun /> : <Moon />}
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button type="button" variant="outline" size="icon-sm" aria-label="Mais opções">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon-sm"
+              className="size-10 sm:size-8"
+              aria-label="Mais opções"
+            >
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>

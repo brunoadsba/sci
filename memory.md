@@ -21,7 +21,7 @@ Atualizado: 2026-09-14
 ## Stack
 
 - Next.js 15 (App Router) + TypeScript + Tailwind v4 + shadcn/ui (Radix)
-- `next-themes`, `nuqs`, `zod`, `dexie`, `sonner`
+- `next-themes`, `nuqs`, `zod`, `dexie`, `sonner`, `lucide-react`
 - Sem auth de app, sem DB cloud, sem env obrigatória na v1
 - Logo: `public/logo-codeba.png` (fonte: `Logo CODEBA.png` na raiz)
 
@@ -57,12 +57,26 @@ Atualizado: 2026-09-14
 
 ## UI (estado atual)
 
-- Views: Visão geral | Quadro | Lista | Cronograma | Auditoria
-- Header: logo CODEBA (topo esquerdo) + título + badge progresso + toolbar enxuta
+- SPA com `?view=` (nuqs): Visão geral | Quadro | Lista | Cronograma | Auditoria
+- **Home** = Visão geral (`dashboard`)
+- Navegação: logo CODEBA, breadcrumb “Plano” e seta voltar → Visão geral (filtros preservados)
+- Switcher com ícones Lucide; mobile: labels curtas + scroll horizontal
+- Header sticky: gradiente institucional, barra de progresso, sombra ao scroll
+- Visão geral: faixa resumo (norma + progresso) + CTAs Quadro / Críticas / Lista
+- Responsivo: touch ~44px, KPIs `2 / 3 / 5` cols, CTAs full-width no mobile, toolbar compacta
+- Motion: fade na troca de view; `prefers-reduced-motion` respeitado
 - Menu ⋯: Operador, Importar JSON, Restaurar (AlertDialog)
 - Export: JSON / CSV / HTML
 - Tema institucional azul CODEBA (`globals.css`)
-- Filtros na URL via `nuqs` (`fase`, `status`, `resp`, `prio`, `q`, `view`)
+- Filtros na URL: `fase`, `status`, `resp`, `prio`, `q`, `view`
+
+### Componentes-chave (feature plan)
+
+- `plan-app.tsx` — orquestração
+- `plan-header.tsx` — chrome sticky / home / progresso
+- `plan-view-nav.tsx` — switcher de views
+- `dashboard-hero.tsx` + `dashboard-view.tsx` — Visão geral
+- `plan-toolbar.tsx` — undo/redo, export, tema, ⋯
 
 ## Deploy / ops
 

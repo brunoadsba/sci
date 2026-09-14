@@ -1,17 +1,26 @@
 "use client";
 
+import { useRef } from "react";
 import { PHASE_MILESTONES, PHASES } from "../constants";
-import type { ActionItem } from "../types";
+import type { ActionItem, ViewMode } from "../types";
 import { countByStatus } from "../lib/filters";
 import { PriorityBadge, StatusBadge } from "./status-badge";
+import { DashboardHero } from "./dashboard-hero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface DashboardViewProps {
   actions: ActionItem[];
   onOpen: (id: string) => void;
+  onNavigate?: (view: ViewMode) => void;
 }
 
-export function DashboardView({ actions, onOpen }: DashboardViewProps) {
+export function DashboardView({
+  actions,
+  onOpen,
+  onNavigate,
+}: DashboardViewProps) {
+  const criticasRef = useRef<HTMLDivElement>(null);
   const counts = countByStatus(actions);
   const total = actions.length;
   const progress =
@@ -28,15 +37,33 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
 
   return (
     <div className="grid gap-4">
+      <DashboardHero
+        progress={progress}
+        done={counts.Concluído}
+        total={total}
+        criticasCount={criticas.length}
+        onNavigate={onNavigate}
+        onScrollCriticas={() =>
+          criticasRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
+        }
+      />
+
       <section
-        className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
+        className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         aria-label="Indicadores"
       >
         <Kpi title="Total" value={String(total)} />
-        <Kpi title="Concluídas" value={String(counts.Concluído)} />
+        <Kpi title="Concluídas" value={String(counts.Concluído)} accent />
         <Kpi title="Bloqueadas" value={String(counts.Bloqueado)} />
-        <Kpi title="Críticas abertas" value={String(criticas.length)} />
-        <Kpi title="Progresso" value={`${progress}%`} />
+        <Kpi title="Críticas abertas" value={String(criticas.length)} warn />
+        <Kpi
+          title="Em andamento"
+          value={String(counts["Em andamento"])}
+          className="col-span-2 sm:col-span-1"
+        />
       </section>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -57,7 +84,7 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-muted">
                     <div
-                      className="h-full rounded-full bg-primary transition-all"
+                      className="h-full rounded-full bg-primary transition-[width] duration-500 ease-out motion-reduce:transition-none"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -85,7 +112,7 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
                   <p className="text-xs text-muted-foreground">{phase.prazo}</p>
                   <div className="h-2 overflow-hidden rounded-full bg-muted">
                     <div
-                      className="h-full rounded-full bg-primary/80"
+                      className="h-full rounded-full bg-primary/80 transition-[width] duration-500 ease-out motion-reduce:transition-none"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -103,47 +130,69 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
         </Card>
       </div>
 
-      <Card className="shadow-none">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Críticas em aberto</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {criticas.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              Nenhuma ação crítica pendente nos filtros atuais.
-            </p>
-          ) : (
-            <ul className="divide-y">
-              {criticas.map((action) => (
-                <li key={action.id}>
-                  <button
-                    type="button"
-                    className="flex w-full flex-col gap-1 py-3 text-left hover:bg-muted/40"
-                    onClick={() => onOpen(action.id)}
-                  >
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono text-xs">{action.id}</span>
-                      <PriorityBadge prioridade={action.prioridade} />
-                      <StatusBadge status={action.status} />
-                    </div>
-                    <span className="text-sm">{action.acao}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </CardContent>
-      </Card>
+      <div ref={criticasRef}>
+        <Card className="shadow-none">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Críticas em aberto</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {criticas.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                Nenhuma ação crítica pendente nos filtros atuais.
+              </p>
+            ) : (
+              <ul className="divide-y">
+                {criticas.map((action) => (
+                  <li key={action.id}>
+                    <button
+                      type="button"
+                      className="-mx-1 flex w-full flex-col gap-1 rounded-md px-1 py-3.5 text-left transition-colors hover:bg-muted/40 active:bg-muted/60 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      onClick={() => onOpen(action.id)}
+                    >
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-mono text-xs">{action.id}</span>
+                        <PriorityBadge prioridade={action.prioridade} />
+                        <StatusBadge status={action.status} />
+                      </div>
+                      <span className="text-sm">{action.acao}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
 
-function Kpi({ title, value }: { title: string; value: string }) {
+function Kpi({
+  title,
+  value,
+  accent,
+  warn,
+  className,
+}: {
+  title: string;
+  value: string;
+  accent?: boolean;
+  warn?: boolean;
+  className?: string;
+}) {
   return (
-    <Card className="shadow-none">
+    <Card className={cn("shadow-none", className)}>
       <CardContent className="pt-4">
         <p className="text-xs text-muted-foreground">{title}</p>
-        <p className="mt-1 text-2xl font-semibold tracking-tight">{value}</p>
+        <p
+          className={cn(
+            "mt-1 text-2xl font-semibold tracking-tight tabular-nums",
+            accent && "text-primary",
+            warn && Number(value) > 0 && "text-destructive"
+          )}
+        >
+          {value}
+        </p>
       </CardContent>
     </Card>
   );
