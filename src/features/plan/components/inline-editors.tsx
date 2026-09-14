@@ -11,8 +11,15 @@ import {
 import { STATUS_OPTIONS } from "../constants";
 import { usePlan } from "../hooks/use-plan";
 import type { ActionItem, StatusAcao } from "../types";
+import { cn } from "@/lib/utils";
 
-export function StatusSelect({ action }: { action: ActionItem }) {
+export function StatusSelect({
+  action,
+  className,
+}: {
+  action: ActionItem;
+  className?: string;
+}) {
   const { updateAction } = usePlan();
   return (
     <Select
@@ -22,7 +29,7 @@ export function StatusSelect({ action }: { action: ActionItem }) {
       }
     >
       <SelectTrigger
-        className="h-8 min-w-[9.5rem]"
+        className={cn("h-8 min-w-[9.5rem]", className)}
         onClick={(e) => e.stopPropagation()}
         aria-label={`Status de ${action.id}`}
       >
@@ -39,12 +46,18 @@ export function StatusSelect({ action }: { action: ActionItem }) {
   );
 }
 
-export function ResponsavelInput({ action }: { action: ActionItem }) {
+export function ResponsavelInput({
+  action,
+  className,
+}: {
+  action: ActionItem;
+  className?: string;
+}) {
   const { updateAction } = usePlan();
   return (
     <Input
       key={`${action.id}-resp-${action.responsavel}`}
-      className="h-8 min-w-[8rem]"
+      className={cn("h-8 min-w-[8rem]", className)}
       defaultValue={action.responsavel}
       list="responsaveis-list"
       aria-label={`Responsável de ${action.id}`}
@@ -62,12 +75,18 @@ export function ResponsavelInput({ action }: { action: ActionItem }) {
   );
 }
 
-export function PrazoInput({ action }: { action: ActionItem }) {
+export function PrazoInput({
+  action,
+  className,
+}: {
+  action: ActionItem;
+  className?: string;
+}) {
   const { updateAction } = usePlan();
   return (
     <Input
       key={`${action.id}-prazo-${action.prazo}`}
-      className="h-8 min-w-[5.5rem]"
+      className={cn("h-8 min-w-[5.5rem]", className)}
       defaultValue={action.prazo}
       placeholder="Definir"
       aria-label={`Prazo de ${action.id}`}

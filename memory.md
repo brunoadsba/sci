@@ -66,6 +66,9 @@ Atualizado: 2026-09-14
 - Header: título mobile `SCI/EOR · CODEBA`; logo dark-friendly; progresso em barra só no desktop
 - Siglas: botão ℹ no mobile (dialog); texto completo no desktop / hero `sm+`
 - Visão geral mobile: hero enxuto (progresso inline, CTAs 2 cols); filtros colapsáveis
+- Lista: cards no mobile; tabela no `md+`
+- Quadro: scroll com snap e coluna ~88vw no mobile; hint “Deslize…”
+- Cronograma/Auditoria: stack e `break-words` no mobile
 - Toolbar mobile: só tema + ⋯ (undo/redo/export no menu); desktop completo
 - Responsivo: touch ~44px, KPIs `2 / 3 / 5` cols
 - Motion: fade na troca de view; `prefers-reduced-motion` respeitado

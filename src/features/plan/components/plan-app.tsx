@@ -111,7 +111,7 @@ export function PlanApp() {
 
         {!isHome && (
           <div className="flex items-center justify-between gap-2 print:hidden">
-            <h2 className="text-lg font-semibold tracking-tight">
+            <h2 className="truncate text-base font-semibold tracking-tight sm:text-lg">
               {VIEW_LABELS[view]}
             </h2>
             <Button
@@ -122,7 +122,8 @@ export function PlanApp() {
               onClick={goHome}
             >
               <ArrowLeft className="size-3.5" />
-              Visão geral
+              <span className="sm:hidden">Início</span>
+              <span className="hidden sm:inline">Visão geral</span>
             </Button>
           </div>
         )}

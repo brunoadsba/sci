@@ -26,15 +26,15 @@ export function CronogramaView({ actions, onOpen }: CronogramaViewProps) {
 
   return (
     <div className="grid gap-4">
-      <div className="flex flex-wrap items-end gap-3 rounded-xl border bg-card p-4">
-        <div className="grid gap-1.5">
+      <div className="flex flex-col gap-3 rounded-xl border bg-card p-3 sm:flex-row sm:flex-wrap sm:items-end sm:p-4">
+        <div className="grid w-full gap-1.5 sm:w-auto">
           <Label htmlFor="baseDate">Data-base do cronograma</Label>
           <Input
             id="baseDate"
             type="date"
             value={base}
             onChange={(e) => setBaseDate(e.target.value)}
-            className="h-9 w-auto"
+            className="h-10 w-full sm:h-9 sm:w-auto"
           />
         </div>
         <p className="text-sm text-muted-foreground">
@@ -51,14 +51,16 @@ export function CronogramaView({ actions, onOpen }: CronogramaViewProps) {
         return (
           <section
             key={phase.id}
-            className="rounded-xl border bg-card p-4"
+            className="rounded-xl border bg-card p-3 sm:p-4"
             aria-label={phase.label}
           >
             <header className="mb-3">
-              <h2 className="text-sm font-semibold">{phase.label}</h2>
+              <h2 className="text-sm font-semibold break-words">
+                {phase.label}
+              </h2>
               <p className="text-xs text-muted-foreground">{phase.prazo}</p>
               {milestone && (
-                <p className="mt-1 text-xs text-primary">
+                <p className="mt-1 text-xs text-primary break-words">
                   {milestone.label} — {milestone.prazo}
                 </p>
               )}
@@ -91,7 +93,7 @@ export function CronogramaView({ actions, onOpen }: CronogramaViewProps) {
                       <StatusBadge status={action.status} />
                       <span className="text-muted-foreground">até {end}</span>
                     </div>
-                    <p className="text-sm">{action.acao}</p>
+                    <p className="text-sm break-words">{action.acao}</p>
                     <div className="h-2 overflow-hidden rounded-full bg-muted">
                       <div
                         className="h-full rounded-full bg-primary/70"

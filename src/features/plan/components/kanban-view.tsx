@@ -82,7 +82,10 @@ export function KanbanView({ actions, onOpen }: KanbanViewProps) {
 
   return (
     <>
-      <div className="flex gap-3 overflow-x-auto pb-2">
+      <p className="mb-2 text-xs text-muted-foreground sm:hidden">
+        Deslize para ver outras colunas
+      </p>
+      <div className="-mx-3 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-3 pb-2 sm:mx-0 sm:px-0">
         {STATUS_OPTIONS.map((status) => {
           const items = actions.filter((a) => a.status === status);
           return (
@@ -91,13 +94,13 @@ export function KanbanView({ actions, onOpen }: KanbanViewProps) {
               data-status={status}
               aria-label={`Coluna ${status}`}
               className={cn(
-                "flex w-[min(100%,20rem)] shrink-0 flex-col gap-2 rounded-xl border bg-muted/30 p-3",
+                "flex w-[min(88vw,20rem)] shrink-0 snap-center flex-col gap-2 rounded-xl border bg-muted/30 p-3 sm:w-80 sm:snap-none",
                 overStatus === status && "ring-2 ring-primary"
               )}
             >
               <header className="flex items-center justify-between gap-2 px-1">
-                <h2 className="text-sm font-semibold">{status}</h2>
-                <span className="text-xs text-muted-foreground">
+                <h2 className="truncate text-sm font-semibold">{status}</h2>
+                <span className="shrink-0 text-xs text-muted-foreground">
                   {items.length}
                 </span>
               </header>
@@ -127,7 +130,7 @@ export function KanbanView({ actions, onOpen }: KanbanViewProps) {
                       </button>
                       <button
                         type="button"
-                        className="flex-1 text-left text-sm font-medium leading-snug"
+                        className="min-w-0 flex-1 text-left text-sm font-medium leading-snug"
                         onClick={() => {
                           if (!moved.current) onOpen(action.id);
                         }}
@@ -135,13 +138,18 @@ export function KanbanView({ actions, onOpen }: KanbanViewProps) {
                         <span className="font-mono text-xs text-muted-foreground">
                           {action.id}
                         </span>
-                        <span className="mt-1 block">{action.acao}</span>
+                        <span className="mt-1 block break-words">
+                          {action.acao}
+                        </span>
                       </button>
                     </div>
                     <div className="mb-2">
                       <PriorityBadge prioridade={action.prioridade} />
                     </div>
-                    <StatusSelect action={action} />
+                    <StatusSelect
+                      action={action}
+                      className="h-10 w-full min-w-0"
+                    />
                   </article>
                 ))}
               </div>
