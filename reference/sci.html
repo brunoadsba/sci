@@ -1,0 +1,3428 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Plano de Ação Premium v4 — CODEBA | SCI/EOR</title>
+
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-2: #fbfdff;
+      --text: #17233a;
+      --muted: #5b677a;
+      --line: #dbe2ec;
+      --primary: #1d4ed8;
+      --primary-soft: rgba(29, 78, 216, 0.12);
+      --danger: #b91c1c;
+      --danger-soft: rgba(185, 28, 28, 0.12);
+      --success: #15803d;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      color-scheme: light;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #161f2e;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --line: #263246;
+      --primary: #60a5fa;
+      --primary-soft: rgba(96, 165, 250, 0.16);
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.16);
+      --success: #4ade80;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1820px, calc(100% - 1.2rem));
+      margin-inline: auto;
+      padding-bottom: 2rem;
+    }
+
+    .hidden { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar .container {
+      display: grid;
+      gap: 0.8rem;
+      padding-top: 0.85rem;
+      padding-bottom: 0.85rem;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.18rem;
+      line-height: 1.25;
+    }
+
+    .brand p {
+      margin: 0.25rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 0.62rem 0.8rem;
+      min-height: 44px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn.primary {
+      background: var(--primary);
+      border-color: transparent;
+      color: white;
+    }
+
+    html[data-theme="dark"] .btn.primary {
+      color: #08101f;
+    }
+
+    .btn.danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: transparent;
+    }
+
+    .view-switch {
+      display: flex;
+      gap: 0.55rem;
+      overflow-x: auto;
+      padding: 0.7rem;
+      margin: 1rem 0;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .view-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      border-radius: 999px;
+      min-height: 44px;
+      padding: 0.62rem 1rem;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.15s ease;
+    }
+
+    .view-btn:hover {
+      background: var(--primary-soft);
+    }
+
+    .view-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: transparent;
+    }
+
+    html[data-theme="dark"] .view-btn.active {
+      color: #08101f;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea,
+    .inline-field input,
+    td input,
+    td select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 0.7rem 0.8rem;
+      min-height: 44px;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .kpi {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 0.95rem;
+    }
+
+    .kpi-value {
+      display: block;
+      font-size: 1.9rem;
+      font-weight: 900;
+      margin-bottom: 0.25rem;
+    }
+
+    .kpi-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .charts-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .chart-panel h2 {
+      margin: 0 0 1rem;
+      font-size: 1.08rem;
+    }
+
+    .donut-wrap {
+      display: grid;
+      place-items: center;
+      padding: 0.5rem 0 1rem;
+    }
+
+    .donut {
+      width: min(230px, 100%);
+      height: auto;
+    }
+
+    .donut text {
+      fill: currentColor;
+    }
+
+    .donut-value {
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .donut-label {
+      font-size: 12px;
+      fill: var(--muted);
+    }
+
+    .legend {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+    }
+
+    .wave-row {
+      margin-bottom: 1.05rem;
+    }
+
+    .wave-row-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.45rem;
+    }
+
+    .wave-row-head strong {
+      font-size: 0.98rem;
+    }
+
+    .wave-row-head span {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .stacked-bar {
+      display: flex;
+      width: 100%;
+      min-height: 18px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--line);
+    }
+
+    .segment {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .status-bg-nao-iniciado { background: #94a3b8; }
+    .status-bg-em-andamento { background: #3b82f6; }
+    .status-bg-concluido { background: #22c55e; }
+    .status-bg-bloqueado { background: #ef4444; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.35rem 0.62rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge.onda {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
+      border-color: rgba(59, 130, 246, 0.18);
+    }
+
+    .badge.prioridade-critica {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.18);
+    }
+
+    .badge.prioridade-alta {
+      background: rgba(245, 158, 11, 0.14);
+      color: #d97706;
+      border-color: rgba(245, 158, 11, 0.18);
+    }
+
+    .badge.prioridade-media {
+      background: rgba(34, 197, 94, 0.14);
+      color: #16a34a;
+      border-color: rgba(34, 197, 94, 0.18);
+    }
+
+    .badge.status-nao-iniciado {
+      background: rgba(148, 163, 184, 0.16);
+      color: #64748b;
+      border-color: rgba(148, 163, 184, 0.18);
+    }
+
+    .badge.status-em-andamento {
+      background: rgba(59, 130, 246, 0.14);
+      color: #3b82f6;
+      border-color: rgba(59, 130, 246, 0.18);
+    }
+
+    .badge.status-concluido {
+      background: rgba(34, 197, 94, 0.16);
+      color: #22c55e;
+      border-color: rgba(34, 197, 94, 0.18);
+    }
+
+    .badge.status-bloqueado {
+      background: rgba(239, 68, 68, 0.16);
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.18);
+    }
+
+    .badge.type-alteracao {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
+    }
+
+    .badge.type-sistema,
+    .badge.type-undo,
+    .badge.type-redo {
+      background: rgba(148, 163, 184, 0.16);
+      color: #64748b;
+    }
+
+    .badge.type-importacao {
+      background: rgba(34, 197, 94, 0.14);
+      color: #16a34a;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .mini-item {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      border-radius: 14px;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .mini-item:hover,
+    .mini-item:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+      outline: none;
+    }
+
+    .mini-item-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.45rem;
+    }
+
+    .mini-item-title {
+      font-weight: 800;
+    }
+
+    .empty,
+    .empty-small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .empty-small {
+      padding: 1rem 0;
+    }
+
+    .cards {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: 0.15s ease;
+      background: var(--panel);
+      outline: none;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .card h3 {
+      margin: 0 0 0.9rem;
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .meta-grid,
+    .inline-fields {
+      display: grid;
+      gap: 0.65rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.92rem;
+    }
+
+    .meta-grid span,
+    .inline-field span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .inline-field input {
+      padding: 0.58rem 0.7rem;
+      border-radius: 10px;
+      min-height: 42px;
+    }
+
+    .card-footer {
+      display: grid;
+      gap: 0.35rem;
+      border-top: 1px solid var(--line);
+      padding-top: 0.8rem;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1250px;
+    }
+
+    th,
+    td {
+      padding: 0.8rem;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      cursor: pointer;
+    }
+
+    tbody tr:hover,
+    tbody tr:focus-visible {
+      background: var(--primary-soft);
+      outline: none;
+    }
+
+    td input,
+    td select {
+      min-width: 165px;
+    }
+
+    .kanban {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(265px, 86vw);
+      gap: 0.9rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.75rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .kanban-column {
+      scroll-snap-align: center;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 0.85rem;
+      min-height: 62vh;
+      transition: 0.15s ease;
+    }
+
+    .kanban-column.drag-over {
+      outline: 2px dashed var(--primary);
+      outline-offset: 4px;
+      background: var(--primary-soft);
+    }
+
+    .kanban-column-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+      padding: 0.2rem 0.2rem 0.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kanban-cards {
+      display: grid;
+      gap: 0.8rem;
+      min-height: 95px;
+    }
+
+    .kanban-card {
+      cursor: grab;
+    }
+
+    .kanban-card.dragging {
+      opacity: 0.55;
+      transform: scale(0.99);
+    }
+
+    .kanban-empty {
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      border-radius: 14px;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      font-size: 1.25rem;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .drag-ghost {
+      position: fixed;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.92;
+      transform: rotate(2deg) scale(1.02);
+      box-shadow: var(--shadow);
+      cursor: grabbing;
+    }
+
+    body.dragging-body {
+      overflow: hidden;
+      user-select: none;
+    }
+
+    body.dragging-body * {
+      cursor: grabbing !important;
+    }
+
+    .gantt-controls {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .gantt-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gantt {
+      min-width: 920px;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .gantt-header {
+      position: relative;
+      height: 42px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 0.4rem;
+    }
+
+    .gantt-tick {
+      position: absolute;
+      bottom: 5px;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .gantt-group-title {
+      font-weight: 900;
+      margin: 0.8rem 0 0.2rem;
+    }
+
+    .gantt-row {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .gantt-row-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .gantt-track {
+      position: relative;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      border-radius: 999px;
+      cursor: pointer;
+      opacity: 0.96;
+    }
+
+    .gantt-bar:hover,
+    .gantt-bar:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+    }
+
+    .gantt-today {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--danger);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .history-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .history-item {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      border-radius: 14px;
+      padding: 0.8rem;
+    }
+
+    .history-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      margin-bottom: 0.45rem;
+    }
+
+    .history-time {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      z-index: 100;
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      padding: 1rem;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 0.8rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 130;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 0.85rem 1rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: 0.2s ease;
+      pointer-events: none;
+      max-width: min(430px, calc(100vw - 2rem));
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 700px) {
+      .controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .field.search {
+        grid-column: 1 / -1;
+      }
+
+      .modal {
+        padding: 1.2rem;
+      }
+    }
+
+    @media (min-width: 980px) {
+      .topbar .container {
+        grid-template-columns: auto 1fr;
+        align-items: center;
+      }
+
+      .toolbar {
+        justify-content: flex-end;
+      }
+
+      .charts-grid {
+        grid-template-columns: repeat(2, minmax(320px, 1fr));
+      }
+
+      .kanban {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
+        overflow: visible;
+        scroll-snap-type: none;
+      }
+
+      .kanban-column {
+        min-height: 340px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      }
+    }
+
+    @media (min-width: 1150px) {
+      .controls {
+        grid-template-columns: 2fr repeat(4, minmax(150px, 1fr)) auto;
+      }
+
+      .field.search {
+        grid-column: auto;
+      }
+
+      .gantt-row {
+        grid-template-columns: 280px 1fr;
+        align-items: center;
+      }
+    }
+
+    @media (min-width: 800px) {
+      .overlay {
+        padding: 1rem;
+      }
+
+      .modal {
+        width: min(920px, 100%);
+        height: auto;
+        max-height: 92vh;
+        border-radius: 22px;
+      }
+    }
+
+    body[data-view="history"] .select-field {
+      display: none !important;
+    }
+
+    @media print {
+      .topbar,
+      .view-switch,
+      .controls,
+      .toolbar,
+      .overlay,
+      .toast,
+      .hint,
+      .drag-handle,
+      .card-footer select,
+      td select,
+      td input,
+      .inline-field input,
+      .history-toolbar .btn {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+        color: black;
+      }
+
+      .panel,
+      .kpi,
+      .card,
+      .kanban-column,
+      .chart-panel,
+      .history-item {
+        box-shadow: none;
+        border-color: #ccc;
+      }
+
+      .card,
+      tr,
+      .kanban-column,
+      .gantt-row,
+      .history-item {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body data-view="dashboard">
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <h1>Plano de Ação Premium v4 — Norma SCI/EOR</h1>
+        <p>CODEBA | NO.S8.8.DIP.01 | IndexedDB, histórico, undo/redo, Gantt, Kanban touch e exportação executiva</p>
+      </div>
+
+      <div class="toolbar" aria-label="Ações gerais">
+        <button id="undoBtn" class="btn" type="button" disabled>↶ Desfazer</button>
+        <button id="redoBtn" class="btn" type="button" disabled>↷ Refazer</button>
+        <button id="userBtn" class="btn" type="button">👤 Usuário local</button>
+        <button id="themeToggle" class="btn" type="button">Tema escuro</button>
+        <button id="exportCsv" class="btn" type="button">CSV</button>
+        <button id="exportExcel" class="btn" type="button">Excel</button>
+        <button id="exportJson" class="btn" type="button">JSON</button>
+        <button id="importJsonBtn" class="btn" type="button">Importar</button>
+        <button id="exportHtml" class="btn primary" type="button">HTML com status</button>
+        <button id="printBtn" class="btn" type="button">Imprimir</button>
+        <button id="restoreBtn" class="btn danger" type="button">Restaurar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="panel view-switch" aria-label="Modos de visualização">
+      <button class="view-btn active" data-view="dashboard" type="button">Dashboard</button>
+      <button class="view-btn" data-view="kanban" type="button">Kanban</button>
+      <button class="view-btn" data-view="cards" type="button">Cards</button>
+      <button class="view-btn" data-view="table" type="button">Tabela</button>
+      <button class="view-btn" data-view="gantt" type="button">Gantt</button>
+      <button class="view-btn" data-view="history" type="button">Histórico</button>
+    </nav>
+
+    <section class="panel controls" aria-label="Filtros">
+      <div class="field search">
+        <label for="search">Buscar</label>
+        <input id="search" type="search" placeholder="ID, ação, entregável, responsável, prazo, critério, histórico..." />
+      </div>
+
+      <div class="field select-field">
+        <label for="ondaFilter">Onda</label>
+        <select id="ondaFilter"></select>
+      </div>
+
+      <div class="field select-field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter"></select>
+      </div>
+
+      <div class="field select-field">
+        <label for="respFilter">Responsável</label>
+        <select id="respFilter"></select>
+      </div>
+
+      <div class="field select-field">
+        <label for="prioFilter">Prioridade</label>
+        <select id="prioFilter"></select>
+      </div>
+
+      <div class="field" style="align-self:end;">
+        <label class="sr-only" for="clearFilters">Limpar filtros</label>
+        <button id="clearFilters" class="btn" type="button">Limpar filtros</button>
+      </div>
+    </section>
+
+    <section id="content" aria-label="Conteúdo principal">
+      <div class="panel empty">Carregando plano...</div>
+    </section>
+
+    <p class="hint">
+      Recursos da versão 4.0: persistência em IndexedDB, histórico de alterações, desfazer/refazer, Kanban com arraste por toque,
+      Gantt por onda/prazo, edição direta de responsável e prazo, exportação CSV/Excel/JSON/HTML e tema claro/escuro.
+    </p>
+  </main>
+
+  <datalist id="responsaveis-list"></datalist>
+
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-label="Detalhes da ação">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modalTitle">Detalhes da ação</h2>
+        <button id="closeModal" class="btn" type="button">Fechar</button>
+      </div>
+
+      <div id="modalDetails" class="meta-grid"></div>
+
+      <div class="field">
+        <label for="modalStatus">Status</label>
+        <select id="modalStatus"></select>
+      </div>
+
+      <div class="field">
+        <label for="modalObs">Observações</label>
+        <textarea id="modalObs" placeholder="Registre comentários, evidências, pendências ou encaminhamentos..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button id="saveAction" class="btn primary" type="button">Salvar alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <input id="importInput" type="file" accept=".json,application/json" hidden />
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="text/typescript" id="typescript-model">
+    type StatusAcao = 'Não iniciado' | 'Em andamento' | 'Concluído' | 'Bloqueado';
+    type Onda = 1 | 2 | 3;
+    type Prioridade = 'Crítica' | 'Alta' | 'Média';
+    type ViewMode = 'dashboard' | 'kanban' | 'cards' | 'table' | 'gantt' | 'history';
+    type ThemeMode = 'light' | 'dark';
+    type HistoryType = 'alteracao' | 'sistema' | 'importacao' | 'undo' | 'redo';
+
+    interface ActionItem {
+      id: string;
+      onda: Onda;
+      prioridade: Prioridade;
+      acao: string;
+      entregavel: string;
+      responsavel: string;
+      prazo: string;
+      criterio: string;
+      status: StatusAcao;
+      obs: string;
+      updatedAt?: string;
+    }
+
+    interface HistoryEntry {
+      id: string;
+      timestamp: string;
+      user: string;
+      actionId: string;
+      actionTitle: string;
+      field: string;
+      oldValue: string;
+      newValue: string;
+      type: HistoryType;
+    }
+
+    interface AppState {
+      theme: ThemeMode;
+      view: ViewMode;
+      user: string;
+      baseDate: string;
+      updatedAt: string;
+      history: HistoryEntry[];
+      actions: ActionItem[];
+    }
+  </script>
+
+  <script>
+    const STORAGE_KEY = 'plano-sci-codeba-premium-v4';
+    const DB_NAME = 'plano-sci-codeba-db';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'app-state';
+
+    const STATUS_OPTIONS = ['Não iniciado', 'Em andamento', 'Concluído', 'Bloqueado'];
+    const PRIORITIES = ['Crítica', 'Alta', 'Média'];
+    const VALID_VIEWS = ['dashboard', 'kanban', 'cards', 'table', 'gantt', 'history'];
+
+    const WAVES = [
+      { id: 1, label: 'Onda 1 — Ações críticas e impeditivas', prazo: '0 a 30 dias', startDay: 0 },
+      { id: 2, label: 'Onda 2 — Operacionalização da norma', prazo: '31 a 90 dias', startDay: 31 },
+      { id: 3, label: 'Onda 3 — Aperfeiçoamento e sustentabilidade', prazo: '91 a 180 dias', startDay: 91 }
+    ];
+
+    const FIELD_LABELS = {
+      status: 'Status',
+      responsavel: 'Responsável',
+      prazo: 'Prazo',
+      obs: 'Observações',
+      acao: 'Ação',
+      entregavel: 'Entregável',
+      criterio: 'Critério de aceite',
+      prioridade: 'Prioridade',
+      onda: 'Onda'
+    };
+
+    const INITIAL_ACTIONS = [
+      {
+        id: 'A-01',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Formalizar Grupo de Trabalho para revisão da norma',
+        entregavel: 'Portaria, ata ou despacho interno',
+        responsavel: 'DIP / Diretoria',
+        prazo: 'D+5',
+        criterio: 'GT formalmente constituído'
+      },
+      {
+        id: 'A-02',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Elaborar cronograma detalhado de revisão',
+        entregavel: 'Cronograma com responsáveis e marcos',
+        responsavel: 'GMAST',
+        prazo: 'D+7',
+        criterio: 'Cronograma aprovado'
+      },
+      {
+        id: 'A-03',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Preencher a Seção 3 — Definições e Siglas',
+        entregavel: 'Glossário técnico',
+        responsavel: 'GMAST',
+        prazo: 'D+15',
+        criterio: 'Todos os termos relevantes definidos'
+      },
+      {
+        id: 'A-04',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Preencher a Seção 4 — Documentos de Referência',
+        entregavel: 'Lista atualizada de referências legais e técnicas',
+        responsavel: 'GMAST + Jurídico',
+        prazo: 'D+15',
+        criterio: 'Referências válidas e aplicáveis'
+      },
+      {
+        id: 'A-05',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Redigir a Seção 8.8 — Mobilização',
+        entregavel: 'Procedimento de mobilização',
+        responsavel: 'GMAST + Gerência dos Portos + CCGP',
+        prazo: 'D+20',
+        criterio: 'Fluxo, responsabilidades e recursos definidos'
+      },
+      {
+        id: 'A-06',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Redigir a Seção 8.9 — Desmobilização',
+        entregavel: 'Procedimento de desmobilização',
+        responsavel: 'GMAST + Gerência dos Portos',
+        prazo: 'D+20',
+        criterio: 'Critérios de encerramento e liberação definidos'
+      },
+      {
+        id: 'A-07',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Corrigir erros de numeração, duplicidade e formatação',
+        entregavel: 'Minuta revisada',
+        responsavel: 'GMAST / DIP',
+        prazo: 'D+10',
+        criterio: 'Documento sem inconsistências formais'
+      },
+      {
+        id: 'A-08',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Eliminar campos não preenchidos e placeholders',
+        entregavel: 'Texto final sem lacunas',
+        responsavel: 'GMAST',
+        prazo: 'D+10',
+        criterio: 'Nenhum campo pendente ou placeholder'
+      },
+      {
+        id: 'A-09',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Resolver inconsistência sobre designação e presunção do Comandante do Incidente',
+        entregavel: 'Regra única e clara de comando',
+        responsavel: 'GMAST + Jurídico + Gerência dos Portos',
+        prazo: 'D+20',
+        criterio: 'Comando definido sem conflito normativo'
+      },
+      {
+        id: 'A-10',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Revisar a Seção 15 — Distribuição e Publicidade',
+        entregavel: 'Matriz de distribuição e publicidade',
+        responsavel: 'DIP / Comunicação',
+        prazo: 'D+15',
+        criterio: 'Meios de divulgação e ciência definidos'
+      },
+      {
+        id: 'A-11',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Consolidar a primeira versão revisada',
+        entregavel: 'Minuta v0.1 corrigida',
+        responsavel: 'GMAST',
+        prazo: 'D+25',
+        criterio: 'Todas as ações da Onda 1 concluídas'
+      },
+      {
+        id: 'A-12',
+        onda: 1,
+        prioridade: 'Crítica',
+        acao: 'Submeter à validação jurídica',
+        entregavel: 'Parecer ou manifestação jurídica',
+        responsavel: 'Gerência Jurídica',
+        prazo: 'D+30',
+        criterio: 'Avaliação jurídica concluída'
+      },
+      {
+        id: 'B-01',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir níveis de resposta ou aprimorar a classificação de baixa e maior complexidade',
+        entregavel: 'Matriz de classificação',
+        responsavel: 'GMAST + Gerência dos Portos',
+        prazo: 'D+45',
+        criterio: 'Níveis, critérios e exemplos definidos'
+      },
+      {
+        id: 'B-02',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Estabelecer critérios objetivos de escalonamento',
+        entregavel: 'Fluxograma de escalonamento',
+        responsavel: 'GMAST + CCGP + Segurança Portuária',
+        prazo: 'D+45',
+        criterio: 'Gatilhos claros para mudança de nível'
+      },
+      {
+        id: 'B-03',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir canais alternativos de acionamento',
+        entregavel: 'Procedimento de ativação redundante',
+        responsavel: 'GMAST + CCGP + TI',
+        prazo: 'D+45',
+        criterio: 'Canal alternativo definido e testado'
+      },
+      {
+        id: 'B-04',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir autoridade substituta para ativação do SCI',
+        entregavel: 'Regra formal de ativação',
+        responsavel: 'GMAST + Gerência dos Portos',
+        prazo: 'D+45',
+        criterio: 'Substituição clara em caso de indisponibilidade'
+      },
+      {
+        id: 'B-05',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Detalhar cadeia completa de sucessão de comando',
+        entregavel: 'Tabela de sucessão',
+        responsavel: 'GMAST + Jurídico',
+        prazo: 'D+45',
+        criterio: 'No mínimo três níveis definidos'
+      },
+      {
+        id: 'B-06',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Criar procedimento de transferência de comando',
+        entregavel: 'Formulário/checklist de transferência',
+        responsavel: 'GMAST',
+        prazo: 'D+50',
+        criterio: 'Briefing, registro e comunicação definidos'
+      },
+      {
+        id: 'B-07',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir efetivo mínimo por porto e turno',
+        entregavel: 'Tabela de dimensionamento',
+        responsavel: 'GMAST + Gerência dos Portos + RH',
+        prazo: 'D+60',
+        criterio: 'Efetivo mínimo por unidade/turno aprovado'
+      },
+      {
+        id: 'B-08',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir tempos de resposta de referência',
+        entregavel: 'Metas de tempo por área/porto',
+        responsavel: 'GMAST + CCGP',
+        prazo: 'D+60',
+        criterio: 'Tempos definidos para resposta inicial'
+      },
+      {
+        id: 'B-09',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir Posto de Comando principal e alternativo',
+        entregavel: 'Local, infraestrutura e responsáveis',
+        responsavel: 'Gerência dos Portos + Administração',
+        prazo: 'D+60',
+        criterio: 'Postos definidos para cada porto'
+      },
+      {
+        id: 'B-10',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir recursos mínimos do Posto de Comando',
+        entregavel: 'Checklist de infraestrutura',
+        responsavel: 'GMAST + Administração + TI',
+        prazo: 'D+60',
+        criterio: 'Comunicação, registros e equipamentos definidos'
+      },
+      {
+        id: 'B-11',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Revisar requisitos de capacitação e aproveitamento mínimo',
+        entregavel: 'Texto revisado da Seção 12',
+        responsavel: 'GMAST + RH / Treinamento',
+        prazo: 'D+60',
+        criterio: 'Critérios objetivos e exequíveis'
+      },
+      {
+        id: 'B-12',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Revisar frequência de simulados e exercícios',
+        entregavel: 'Programa anual de exercícios',
+        responsavel: 'GMAST',
+        prazo: 'D+60',
+        criterio: 'Mínimo de exercícios definido'
+      },
+      {
+        id: 'B-13',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Revisar critérios de seleção de brigadistas',
+        entregavel: 'Matriz com pesos, nota de corte e responsáveis',
+        responsavel: 'GMAST + RH',
+        prazo: 'D+60',
+        criterio: 'Processo seletivo objetivo'
+      },
+      {
+        id: 'B-14',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Revisar critérios de aptidão médica e psicológica',
+        entregavel: 'Requisitos mínimos e fluxo de avaliação',
+        responsavel: 'GMAST + Saúde Ocupacional',
+        prazo: 'D+60',
+        criterio: 'Critérios compatíveis com PCMSO'
+      },
+      {
+        id: 'B-15',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Definir lista de formulários SCI aplicáveis',
+        entregavel: 'Relação de formulários e modelos',
+        responsavel: 'GMAST',
+        prazo: 'D+60',
+        criterio: 'Formulários padronizados e disponíveis'
+      },
+      {
+        id: 'B-16',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Revisar indicadores de prontidão',
+        entregavel: 'Painel de indicadores',
+        responsavel: 'GMAST',
+        prazo: 'D+75',
+        criterio: 'Indicadores com meta, responsável e periodicidade'
+      },
+      {
+        id: 'B-17',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Criar procedimento de Análise Pós-Ação',
+        entregavel: 'Modelo de AAR e fluxo de ações corretivas',
+        responsavel: 'GMAST + Qualidade',
+        prazo: 'D+75',
+        criterio: 'Procedimento aprovado'
+      },
+      {
+        id: 'B-18',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Validar a norma com as equipes dos três portos',
+        entregavel: 'Reuniões técnicas e registros de contribuição',
+        responsavel: 'Gerência dos Portos',
+        prazo: 'D+85',
+        criterio: 'Contribuições consolidadas'
+      },
+      {
+        id: 'B-19',
+        onda: 2,
+        prioridade: 'Alta',
+        acao: 'Realizar exercício de mesa ou simulado de validação',
+        entregavel: 'Relatório de validação operacional',
+        responsavel: 'GMAST + Portos',
+        prazo: 'D+90',
+        criterio: 'Pontos fortes e oportunidades registrados'
+      },
+      {
+        id: 'C-01',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Elaborar matriz de responsabilidades',
+        entregavel: 'Matriz RACI',
+        responsavel: 'GMAST + áreas envolvidas',
+        prazo: 'D+120',
+        criterio: 'Responsabilidades sem sobreposição'
+      },
+      {
+        id: 'C-02',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Integrar o SCI aos planos existentes',
+        entregavel: 'Matriz de integração com PAM, PEI, PSP, PCE, PAE e PCN',
+        responsavel: 'GMAST',
+        prazo: 'D+150',
+        criterio: 'Interfaces e gatilhos definidos'
+      },
+      {
+        id: 'C-03',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Incluir procedimentos para incidentes com múltiplas vítimas',
+        entregavel: 'Protocolo de IMV',
+        responsavel: 'GMAST + Saúde / SAMU',
+        prazo: 'D+150',
+        criterio: 'Triagem e fluxo de atendimento definidos'
+      },
+      {
+        id: 'C-04',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Incluir procedimento de preservação de cena',
+        entregavel: 'Diretrizes para investigação',
+        responsavel: 'GMAST + Jurídico + Segurança',
+        prazo: 'D+150',
+        criterio: 'Regras de preservação e cadeia de evidência'
+      },
+      {
+        id: 'C-05',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Incluir contingência para falha de comunicação e sistemas',
+        entregavel: 'Procedimento alternativo',
+        responsavel: 'GMAST + TI + CCGP',
+        prazo: 'D+150',
+        criterio: 'Canal analógico ou redundante definido'
+      },
+      {
+        id: 'C-06',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Avaliar riscos cibernéticos com impacto operacional',
+        entregavel: 'Cenário e resposta inicial',
+        responsavel: 'TI + GMAST',
+        prazo: 'D+180',
+        criterio: 'Cenário incorporado à gestão de emergências'
+      },
+      {
+        id: 'C-07',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Definir interoperabilidade com órgãos externos',
+        entregavel: 'Matriz de comunicação',
+        responsavel: 'GMAST + Segurança Portuária',
+        prazo: 'D+180',
+        criterio: 'Compatibilidade com CBM-BA, Marinha, SAMU e Defesa Civil'
+      },
+      {
+        id: 'C-08',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Estabelecer ciclo de revisão da norma',
+        entregavel: 'Regra de revisão periódica',
+        responsavel: 'GMAST / DIP',
+        prazo: 'D+120',
+        criterio: 'Revisão bienal ou após evento significativo'
+      },
+      {
+        id: 'C-09',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Criar rotina de auditoria e monitoramento',
+        entregavel: 'Relatório periódico de prontidão',
+        responsavel: 'GMAST',
+        prazo: 'D+180',
+        criterio: 'Monitoramento contínuo implementado'
+      },
+      {
+        id: 'C-10',
+        onda: 3,
+        prioridade: 'Média',
+        acao: 'Capacitar sucessores e funções de comando',
+        entregavel: 'Plano de capacitação do SCI',
+        responsavel: 'GMAST + RH',
+        prazo: 'D+120',
+        criterio: 'Pessoal-chave capacitado'
+      }
+    ];
+
+    let state;
+    let undoStack = [];
+    let redoStack = [];
+    let currentActionId = null;
+    let suppressClick = false;
+    let toastTimer = null;
+    let saveTimer = null;
+    let dragState = null;
+    let html5DragId = null;
+    let dbPromise = null;
+    let idbAvailable = true;
+
+    const content = document.getElementById('content');
+    const search = document.getElementById('search');
+    const ondaFilter = document.getElementById('ondaFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const respFilter = document.getElementById('respFilter');
+    const prioFilter = document.getElementById('prioFilter');
+    const clearFilters = document.getElementById('clearFilters');
+
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+    const userBtn = document.getElementById('userBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const exportCsv = document.getElementById('exportCsv');
+    const exportExcel = document.getElementById('exportExcel');
+    const exportJson = document.getElementById('exportJson');
+    const importJsonBtn = document.getElementById('importJsonBtn');
+    const importInput = document.getElementById('importInput');
+    const exportHtml = document.getElementById('exportHtml');
+    const printBtn = document.getElementById('printBtn');
+    const restoreBtn = document.getElementById('restoreBtn');
+    const toast = document.getElementById('toast');
+    const responsaveisList = document.getElementById('responsaveis-list');
+
+    const overlay = document.getElementById('overlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDetails = document.getElementById('modalDetails');
+    const modalStatus = document.getElementById('modalStatus');
+    const modalObs = document.getElementById('modalObs');
+    const closeModal = document.getElementById('closeModal');
+    const saveAction = document.getElementById('saveAction');
+
+    function uid() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (match) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[match]));
+    }
+
+    function slug(value) {
+      return String(value || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    function truncate(value, size = 90) {
+      const text = String(value ?? '');
+      return text.length > size ? text.slice(0, size - 1) + '…' : text;
+    }
+
+    function formatDate(dateLike) {
+      if (!dateLike) return '';
+      const date = new Date(dateLike);
+      if (Number.isNaN(date.getTime())) return '';
+      return date.toLocaleDateString('pt-BR');
+    }
+
+    function formatDateTime(dateLike) {
+      if (!dateLike) return '';
+      const date = new Date(dateLike);
+      if (Number.isNaN(date.getTime())) return '';
+      return date.toLocaleString('pt-BR');
+    }
+
+    function parseDateInput(value) {
+      const date = new Date(value + 'T00:00:00');
+      return Number.isNaN(date.getTime()) ? new Date() : date;
+    }
+
+    function addDays(dateLike, days) {
+      const date = new Date(dateLike);
+      if (Number.isNaN(date.getTime())) return new Date();
+      date.setDate(date.getDate() + days);
+      return date;
+    }
+
+    function statusOptions(selected) {
+      return STATUS_OPTIONS
+        .map((status) => `<option value="${escapeHtml(status)}" ${status === selected ? 'selected' : ''}>${escapeHtml(status)}</option>`)
+        .join('');
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2300);
+    }
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (!('indexedDB' in window)) {
+          reject(new Error('IndexedDB indisponível.'));
+          return;
+        }
+
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function getDB() {
+      if (!idbAvailable) return null;
+
+      try {
+        if (!dbPromise) dbPromise = openDB();
+        return await dbPromise;
+      } catch (error) {
+        idbAvailable = false;
+        console.warn('IndexedDB indisponível. Usando localStorage como fallback.', error);
+        return null;
+      }
+    }
+
+    async function idbGetState() {
+      const db = await getDB();
+      if (!db) return null;
+
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.get('app');
+
+        request.onsuccess = () => resolve(request.result?.state || null);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function idbSetState() {
+      const db = await getDB();
+      if (!db) return;
+
+      try {
+        await new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+
+          store.put({
+            id: 'app',
+            state,
+            savedAt: new Date().toISOString()
+          });
+
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+      } catch (error) {
+        console.warn('Falha ao salvar no IndexedDB.', error);
+      }
+    }
+
+    function saveLocalStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        console.warn('Falha ao salvar no localStorage.', error);
+      }
+    }
+
+    function updateUndoButtons() {
+      undoBtn.disabled = undoStack.length === 0;
+      redoBtn.disabled = redoStack.length === 0;
+    }
+
+    function saveState() {
+      state.updatedAt = new Date().toISOString();
+      saveLocalStorage();
+      updateUndoButtons();
+
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        idbSetState();
+      }, 300);
+    }
+
+    function normalizeState(raw) {
+      if (!raw || typeof raw !== 'object') return null;
+      if (raw.state && typeof raw.state === 'object') return raw.state;
+      if (raw.actions) return raw;
+      return null;
+    }
+
+    function getEmbeddedState() {
+      const element = document.getElementById('embedded-state');
+      if (!element) return null;
+
+      try {
+        return JSON.parse(element.textContent || 'null');
+      } catch (error) {
+        console.warn('Estado embutido inválido.', error);
+        return null;
+      }
+    }
+
+    function loadLocalStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        console.warn('Falha ao ler localStorage.', error);
+        return null;
+      }
+    }
+
+    function stateDate(candidate) {
+      const value = candidate?.updatedAt || candidate?.exportedAt || 0;
+      const time = new Date(value).getTime();
+      return Number.isNaN(time) ? 0 : time;
+    }
+
+    function chooseInitialState(saved, embedded, local) {
+      const candidates = [saved, embedded, local].filter(Boolean);
+      if (!candidates.length) return null;
+
+      return candidates.reduce((best, current) => {
+        return stateDate(current) > stateDate(best) ? current : best;
+      });
+    }
+
+    function sanitizeHistory(history) {
+      if (!Array.isArray(history)) return [];
+
+      return history
+        .filter(Boolean)
+        .slice(0, 200)
+        .map((entry) => ({
+          id: entry.id || uid(),
+          timestamp: entry.timestamp || new Date().toISOString(),
+          user: entry.user || 'Usuário local',
+          actionId: entry.actionId || '-',
+          actionTitle: entry.actionTitle || '',
+          field: entry.field || 'sistema',
+          oldValue: entry.oldValue ?? '',
+          newValue: entry.newValue ?? '',
+          type: entry.type || 'sistema'
+        }));
+    }
+
+    function hydrate(rawState) {
+      const source = normalizeState(rawState);
+      const savedMap = new Map((source?.actions || []).map((item) => [item.id, item]));
+
+      return {
+        theme: source?.theme === 'dark' ? 'dark' : 'light',
+        view: VALID_VIEWS.includes(source?.view) ? source.view : 'dashboard',
+        user: source?.user || 'Usuário local',
+        baseDate: source?.baseDate || new Date().toISOString().slice(0, 10),
+        updatedAt: source?.updatedAt || new Date().toISOString(),
+        history: sanitizeHistory(source?.history),
+        actions: INITIAL_ACTIONS.map((action) => {
+          const saved = savedMap.get(action.id) || {};
+
+          return {
+            ...action,
+            responsavel: saved.responsavel || action.responsavel,
+            prazo: saved.prazo || action.prazo,
+            status: STATUS_OPTIONS.includes(saved.status) ? saved.status : 'Não iniciado',
+            obs: saved.obs || '',
+            updatedAt: saved.updatedAt || null
+          };
+        })
+      };
+    }
+
+    function addHistory(entries) {
+      if (!Array.isArray(state.history)) state.history = [];
+      state.history = [...entries, ...state.history].slice(0, 200);
+    }
+
+    function logChanges(action, changes, type = 'alteracao') {
+      if (!changes.length) return;
+
+      const entries = changes.map((change) => ({
+        id: uid(),
+        timestamp: new Date().toISOString(),
+        user: state.user || 'Usuário local',
+        actionId: action.id,
+        actionTitle: action.acao,
+        field: change.field,
+        oldValue: change.oldValue ?? '',
+        newValue: change.newValue ?? '',
+        type
+      }));
+
+      addHistory(entries);
+    }
+
+    function logSystem(description, type = 'sistema') {
+      addHistory([{
+        id: uid(),
+        timestamp: new Date().toISOString(),
+        user: state.user || 'Usuário local',
+        actionId: '-',
+        actionTitle: description,
+        field: 'sistema',
+        oldValue: '',
+        newValue: '',
+        type
+      }]);
+    }
+
+    function pushUndo() {
+      undoStack.push(JSON.stringify(state.actions));
+      if (undoStack.length > 100) undoStack.shift();
+      redoStack.length = 0;
+      updateUndoButtons();
+    }
+
+    function undo() {
+      if (!undoStack.length) return;
+
+      commitActiveInlineInput();
+
+      redoStack.push(JSON.stringify(state.actions));
+      const previous = JSON.parse(undoStack.pop());
+
+      state.actions = previous;
+      logSystem('Undo: alteração revertida.', 'undo');
+      saveState();
+      render();
+      updateUndoButtons();
+      showToast('Alteração desfeita.');
+    }
+
+    function redo() {
+      if (!redoStack.length) return;
+
+      commitActiveInlineInput();
+
+      undoStack.push(JSON.stringify(state.actions));
+      const next = JSON.parse(redoStack.pop());
+
+      state.actions = next;
+      logSystem('Redo: alteração refeita.', 'redo');
+      saveState();
+      render();
+      updateUndoButtons();
+      showToast('Alteração refeita.');
+    }
+
+    function updateAction(id, patch, options = {}) {
+      const {
+        undoable = true,
+        log = true,
+        type = 'alteracao'
+      } = options;
+
+      const action = state.actions.find((item) => item.id === id);
+      if (!action) return;
+
+      const changes = [];
+
+      for (const key in patch) {
+        if (!Object.prototype.hasOwnProperty.call(patch, key)) continue;
+
+        if (action[key] !== patch[key]) {
+          changes.push({
+            field: key,
+            oldValue: action[key],
+            newValue: patch[key]
+          });
+        }
+      }
+
+      if (!changes.length) return;
+
+      if (undoable) pushUndo();
+
+      state.actions = state.actions.map((item) => {
+        if (item.id !== id) return item;
+
+        return {
+          ...item,
+          ...patch,
+          updatedAt: new Date().toISOString()
+        };
+      });
+
+      if (log) logChanges(action, changes, type);
+
+      saveState();
+      render();
+    }
+
+    function commitActiveInlineInput() {
+      const active = document.activeElement;
+
+      if (
+        active &&
+        active.classList &&
+        (
+          active.classList.contains('editable-responsavel') ||
+          active.classList.contains('editable-prazo')
+        )
+      ) {
+        active.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+
+    function applyTheme() {
+      document.documentElement.dataset.theme = state.theme;
+      themeToggle.textContent = state.theme === 'dark' ? 'Tema claro' : 'Tema escuro';
+    }
+
+    function applyUserLabel() {
+      userBtn.textContent = `👤 ${state.user || 'Usuário local'}`;
+    }
+
+    function populateFilters() {
+      ondaFilter.innerHTML =
+        `<option value="all">Todas</option>` +
+        WAVES.map((wave) => `<option value="${wave.id}">Onda ${wave.id}</option>`).join('');
+
+      statusFilter.innerHTML =
+        `<option value="all">Todos</option>` +
+        STATUS_OPTIONS.map((status) => `<option value="${escapeHtml(status)}">${escapeHtml(status)}</option>`).join('');
+
+      prioFilter.innerHTML =
+        `<option value="all">Todas</option>` +
+        PRIORITIES.map((priority) => `<option value="${escapeHtml(priority)}">${escapeHtml(priority)}</option>`).join('');
+
+      const responsibles = [...new Set(state.actions.map((action) => action.responsavel))].sort((a, b) =>
+        a.localeCompare(b, 'pt-BR')
+      );
+
+      respFilter.innerHTML =
+        `<option value="all">Todos</option>` +
+        responsibles
+          .map((responsible) => `<option value="${escapeHtml(responsible)}">${escapeHtml(responsible)}</option>`)
+          .join('');
+    }
+
+    function updateDatalist() {
+      const responsibles = [...new Set(state.actions.map((action) => action.responsavel))].sort((a, b) =>
+        a.localeCompare(b, 'pt-BR')
+      );
+
+      responsaveisList.innerHTML = responsibles
+        .map((responsible) => `<option value="${escapeHtml(responsible)}">`)
+        .join('');
+    }
+
+    function getFilteredActions() {
+      const query = search.value.trim().toLowerCase();
+
+      return state.actions.filter((action) => {
+        if (ondaFilter.value !== 'all' && String(action.onda) !== ondaFilter.value) return false;
+        if (statusFilter.value !== 'all' && action.status !== statusFilter.value) return false;
+        if (respFilter.value !== 'all' && action.responsavel !== respFilter.value) return false;
+        if (prioFilter.value !== 'all' && action.prioridade !== prioFilter.value) return false;
+
+        if (query) {
+          const haystack = [
+            action.id,
+            action.acao,
+            action.entregavel,
+            action.responsavel,
+            action.prazo,
+            action.criterio,
+            action.obs
+          ].join(' ').toLowerCase();
+
+          if (!haystack.includes(query)) return false;
+        }
+
+        return true;
+      });
+    }
+
+    function donutSvg(percent) {
+      const radius = 52;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference * (1 - percent / 100);
+
+      return `
+        <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="${percent}% concluído">
+          <circle cx="60" cy="60" r="${radius}" fill="none" stroke="var(--line)" stroke-width="14"></circle>
+          <circle
+            cx="60"
+            cy="60"
+            r="${radius}"
+            fill="none"
+            stroke="var(--primary)"
+            stroke-width="14"
+            stroke-linecap="round"
+            stroke-dasharray="${circumference}"
+            stroke-dashoffset="${offset}"
+            transform="rotate(-90 60 60)"
+          ></circle>
+          <text x="60" y="56" text-anchor="middle" class="donut-value">${percent}%</text>
+          <text x="60" y="72" text-anchor="middle" class="donut-label">concluído</text>
+        </svg>
+      `;
+    }
+
+    function stackedBar(actions) {
+      const total = actions.length;
+
+      return `
+        <div class="stacked-bar" aria-label="Distribuição por status">
+          ${STATUS_OPTIONS.map((status) => {
+            const count = actions.filter((action) => action.status === status).length;
+            const width = total ? (count / total) * 100 : 0;
+
+            return `
+              <div
+                class="segment status-bg-${slug(status)}"
+                style="width:${width}%"
+                title="${escapeHtml(status)}: ${count}"
+              ></div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function inlineFields(action) {
+      return `
+        <div class="inline-fields">
+          <div class="inline-field">
+            <span>Responsável</span>
+            <input
+              class="editable-responsavel"
+              data-id="${escapeHtml(action.id)}"
+              list="responsaveis-list"
+              value="${escapeHtml(action.responsavel)}"
+              aria-label="Editar responsável da ação ${escapeHtml(action.id)}"
+              draggable="false"
+            />
+          </div>
+          <div class="inline-field">
+            <span>Prazo</span>
+            <input
+              class="editable-prazo"
+              data-id="${escapeHtml(action.id)}"
+              value="${escapeHtml(action.prazo)}"
+              aria-label="Editar prazo da ação ${escapeHtml(action.id)}"
+              draggable="false"
+            />
+          </div>
+        </div>
+      `;
+    }
+
+    function cardTemplate(action, kanban = false) {
+      return `
+        <article
+          class="card ${kanban ? 'kanban-card' : ''}"
+          data-id="${escapeHtml(action.id)}"
+          tabindex="0"
+          aria-label="Ação ${escapeHtml(action.id)}"
+          ${kanban ? 'draggable="true"' : ''}
+        >
+          <div class="card-top">
+            ${kanban ? `<span class="drag-handle" title="Arrastar para outra coluna" aria-label="Arrastar para outra coluna">⠿</span>` : ''}
+            <div class="card-badges">
+              <span class="badge onda">Onda ${escapeHtml(action.onda)}</span>
+              <span class="badge prioridade-${slug(action.prioridade)}">${escapeHtml(action.prioridade)}</span>
+              <span class="badge status-${slug(action.status)}">${escapeHtml(action.status)}</span>
+            </div>
+          </div>
+
+          <h3>${escapeHtml(action.id)} — ${escapeHtml(action.acao)}</h3>
+
+          <div class="meta-grid">
+            <div>
+              <span>Entregável</span>
+              <strong>${escapeHtml(action.entregavel)}</strong>
+            </div>
+            <div>
+              <span>Prazo</span>
+              <strong>${escapeHtml(action.prazo)}</strong>
+            </div>
+          </div>
+
+          ${inlineFields(action)}
+
+          <div class="card-footer">
+            <label for="quick-status-${escapeHtml(action.id)}">Status</label>
+            <select id="quick-status-${escapeHtml(action.id)}" class="quick-status" data-id="${escapeHtml(action.id)}">
+              ${statusOptions(action.status)}
+            </select>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCards(filtered) {
+      if (!filtered.length) {
+        return `<section class="panel empty">Nenhuma ação encontrada com os filtros atuais.</section>`;
+      }
+
+      let html = '';
+
+      WAVES.forEach((wave) => {
+        const items = filtered.filter((action) => action.onda === wave.id);
+        if (!items.length) return;
+
+        html += `
+          <section class="panel">
+            <div class="wave-row-head" style="margin-bottom:1rem;">
+              <h2 style="margin:0; font-size:1.15rem;">${escapeHtml(wave.label)}</h2>
+              <span>${escapeHtml(wave.prazo)} · ${items.length} ações</span>
+            </div>
+            <div class="cards">
+              ${items.map((action) => cardTemplate(action, false)).join('')}
+            </div>
+          </section>
+        `;
+      });
+
+      return html;
+    }
+
+    function renderKanban(filtered) {
+      if (!filtered.length) {
+        return `<section class="panel empty">Nenhuma ação encontrada com os filtros atuais.</section>`;
+      }
+
+      const columns = STATUS_OPTIONS.map((status) => {
+        const items = filtered.filter((action) => action.status === status);
+
+        return `
+          <section class="kanban-column" data-status="${escapeHtml(status)}" aria-label="Coluna ${escapeHtml(status)}">
+            <header class="kanban-column-head">
+              <span class="badge status-${slug(status)}">${escapeHtml(status)}</span>
+              <strong>${items.length}</strong>
+            </header>
+
+            <div class="kanban-cards">
+              ${items.length
+                ? items.map((action) => cardTemplate(action, true)).join('')
+                : `<div class="kanban-empty">Arraste ações para cá</div>`}
+            </div>
+          </section>
+        `;
+      }).join('');
+
+      return `<div class="kanban">${columns}</div>`;
+    }
+
+    function rowTemplate(action) {
+      return `
+        <tr data-id="${escapeHtml(action.id)}" tabindex="0" aria-label="Ação ${escapeHtml(action.id)}">
+          <td><strong>${escapeHtml(action.id)}</strong></td>
+          <td>Onda ${escapeHtml(action.onda)}</td>
+          <td>${escapeHtml(action.acao)}</td>
+          <td>${escapeHtml(action.entregavel)}</td>
+          <td>
+            <input
+              class="editable-responsavel"
+              data-id="${escapeHtml(action.id)}"
+              list="responsaveis-list"
+              value="${escapeHtml(action.responsavel)}"
+              aria-label="Editar responsável da ação ${escapeHtml(action.id)}"
+            />
+          </td>
+          <td>
+            <input
+              class="editable-prazo"
+              data-id="${escapeHtml(action.id)}"
+              value="${escapeHtml(action.prazo)}"
+              aria-label="Editar prazo da ação ${escapeHtml(action.id)}"
+            />
+          </td>
+          <td><span class="badge prioridade-${slug(action.prioridade)}">${escapeHtml(action.prioridade)}</span></td>
+          <td>
+            <select class="quick-status" data-id="${escapeHtml(action.id)}" aria-label="Alterar status da ação ${escapeHtml(action.id)}">
+              ${statusOptions(action.status)}
+            </select>
+          </td>
+        </tr>
+      `;
+    }
+
+    function renderTable(filtered) {
+      if (!filtered.length) {
+        return `<section class="panel empty">Nenhuma ação encontrada com os filtros atuais.</section>`;
+      }
+
+      return `
+        <section class="panel table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Onda</th>
+                <th>Ação</th>
+                <th>Entregável</th>
+                <th>Responsável</th>
+                <th>Prazo</th>
+                <th>Prioridade</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map(rowTemplate).join('')}
+            </tbody>
+          </table>
+        </section>
+      `;
+    }
+
+    function renderDashboard(filtered) {
+      const total = filtered.length;
+      const concluidas = filtered.filter((action) => action.status === 'Concluído').length;
+      const emAndamento = filtered.filter((action) => action.status === 'Em andamento').length;
+      const bloqueadas = filtered.filter((action) => action.status === 'Bloqueado').length;
+      const naoIniciadas = filtered.filter((action) => action.status === 'Não iniciado').length;
+      const criticasPendentes = filtered.filter((action) => action.prioridade === 'Crítica' && action.status !== 'Concluído').length;
+      const progress = total ? Math.round((concluidas / total) * 100) : 0;
+
+      const kpis = [
+        { label: 'Total de ações', value: total },
+        { label: 'Concluídas', value: concluidas },
+        { label: 'Em andamento', value: emAndamento },
+        { label: 'Não iniciadas', value: naoIniciadas },
+        { label: 'Bloqueadas', value: bloqueadas },
+        { label: 'Críticas pendentes', value: criticasPendentes },
+        { label: 'Progresso geral', value: `${progress}%` }
+      ];
+
+      const waveHtml = WAVES.map((wave) => {
+        const waveActions = filtered.filter((action) => action.onda === wave.id);
+        const waveTotal = waveActions.length;
+        const waveDone = waveActions.filter((action) => action.status === 'Concluído').length;
+        const waveProgress = waveTotal ? Math.round((waveDone / waveTotal) * 100) : 0;
+
+        return `
+          <div class="wave-row">
+            <div class="wave-row-head">
+              <strong>${escapeHtml(wave.label)}</strong>
+              <span>${waveDone}/${waveTotal} concluídas · ${waveProgress}%</span>
+            </div>
+            ${stackedBar(waveActions)}
+          </div>
+        `;
+      }).join('');
+
+      const priorityHtml = PRIORITIES.map((priority) => {
+        const priorityActions = filtered.filter((action) => action.prioridade === priority);
+        const priorityTotal = priorityActions.length;
+        const priorityDone = priorityActions.filter((action) => action.status === 'Concluído').length;
+        const priorityProgress = priorityTotal ? Math.round((priorityDone / priorityTotal) * 100) : 0;
+
+        return `
+          <div class="wave-row">
+            <div class="wave-row-head">
+              <strong>Prioridade ${escapeHtml(priority)}</strong>
+              <span>${priorityDone}/${priorityTotal} concluídas · ${priorityProgress}%</span>
+            </div>
+            ${stackedBar(priorityActions)}
+          </div>
+        `;
+      }).join('');
+
+      const criticalActions = filtered
+        .filter((action) => action.prioridade === 'Crítica' && action.status !== 'Concluído')
+        .slice(0, 8);
+
+      const criticalHtml = criticalActions.length
+        ? `
+          <div class="mini-list">
+            ${criticalActions.map((action) => {
+              return `
+                <div class="mini-item" data-id="${escapeHtml(action.id)}" tabindex="0" role="button" aria-label="Abrir detalhes da ação ${escapeHtml(action.id)}">
+                  <div class="mini-item-head">
+                    <span class="mini-item-title">${escapeHtml(action.id)} — ${escapeHtml(action.acao)}</span>
+                    <span class="badge status-${slug(action.status)}">${escapeHtml(action.status)}</span>
+                  </div>
+                  <div class="meta-grid">
+                    <div>
+                      <span>Responsável</span>
+                      <strong>${escapeHtml(action.responsavel)}</strong>
+                    </div>
+                    <div>
+                      <span>Prazo</span>
+                      <strong>${escapeHtml(action.prazo)}</strong>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `
+        : `<div class="empty-small">Nenhuma ação crítica pendente no filtro atual.</div>`;
+
+      return `
+        <section class="kpis" aria-label="Indicadores">
+          ${kpis.map((kpi) => {
+            return `
+              <div class="kpi">
+                <span class="kpi-value">${escapeHtml(kpi.value)}</span>
+                <span class="kpi-label">${escapeHtml(kpi.label)}</span>
+              </div>
+            `;
+          }).join('')}
+        </section>
+
+        <section class="charts-grid" aria-label="Gráficos">
+          <article class="panel chart-panel">
+            <h2>Progresso geral</h2>
+            <div class="donut-wrap">
+              ${donutSvg(progress)}
+            </div>
+            <div class="legend">
+              ${STATUS_OPTIONS.map((status) => {
+                const count = filtered.filter((action) => action.status === status).length;
+                return `
+                  <span class="legend-item">
+                    <span class="dot status-bg-${slug(status)}"></span>
+                    ${escapeHtml(status)}: ${count}
+                  </span>
+                `;
+              }).join('')}
+            </div>
+          </article>
+
+          <article class="panel chart-panel">
+            <h2>Progresso por onda</h2>
+            ${waveHtml || `<div class="empty-small">Nenhuma ação no filtro atual.</div>`}
+          </article>
+
+          <article class="panel chart-panel">
+            <h2>Distribuição por prioridade</h2>
+            ${priorityHtml || `<div class="empty-small">Nenhuma ação no filtro atual.</div>`}
+          </article>
+
+          <article class="panel chart-panel">
+            <h2>Ações críticas pendentes</h2>
+            ${criticalHtml}
+          </article>
+        </section>
+      `;
+    }
+
+    function parsePrazoDays(prazo, wave) {
+      const text = String(prazo || '');
+
+      const match = text.match(/D\+\s*(\d+)/i);
+      if (match) return parseInt(match[1], 10);
+
+      const parsedDate = new Date(text);
+      if (!Number.isNaN(parsedDate.getTime()) && state.baseDate) {
+        const base = parseDateInput(state.baseDate);
+        const diff = Math.round((parsedDate - base) / 86400000);
+        if (diff >= 0) return diff;
+      }
+
+      const defaults = { 1: 30, 2: 90, 3: 180 };
+      return defaults[wave] || 90;
+    }
+
+    function actionGantt(action) {
+      const wave = WAVES.find((item) => item.id === action.onda) || WAVES[0];
+      const start = wave.startDay;
+      let end = parsePrazoDays(action.prazo, action.onda);
+
+      if (end <= start) end = start + 3;
+
+      return { start, end };
+    }
+
+    function renderGantt(filtered) {
+      if (!filtered.length) {
+        return `<section class="panel empty">Nenhuma ação encontrada com os filtros atuais.</section>`;
+      }
+
+      const baseDate = state.baseDate || new Date().toISOString().slice(0, 10);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const todayOffset = Math.round((today - parseDateInput(baseDate)) / 86400000);
+
+      const ganttItems = filtered.map((action) => {
+        const range = actionGantt(action);
+        return { action, ...range };
+      });
+
+      const maxDay = Math.max(180, todayOffset >= 0 ? todayOffset : 0, ...ganttItems.map((item) => item.end));
+      const ticks = [];
+
+      for (let day = 0; day <= maxDay; day += 30) {
+        ticks.push(day);
+      }
+
+      const header = `
+        <div class="gantt-header">
+          ${ticks.map((day) => {
+            const left = (day / maxDay) * 100;
+            const date = formatDate(addDays(parseDateInput(baseDate), day));
+
+            return `
+              <span class="gantt-tick" style="left:${left}%">
+                D+${day}<br>${escapeHtml(date)}
+              </span>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      const todayLine = (todayOffset >= 0 && todayOffset <= maxDay)
+        ? `<div class="gantt-today" style="left:${(todayOffset / maxDay) * 100}%" title="Hoje"></div>`
+        : '';
+
+      const groups = WAVES.map((wave) => {
+        const waveItems = ganttItems
+          .filter((item) => item.action.onda === wave.id)
+          .sort((a, b) => a.end - b.end);
+
+        if (!waveItems.length) return '';
+
+        const rows = waveItems.map((item) => {
+          const left = (item.start / maxDay) * 100;
+          const width = Math.max(((item.end - item.start) / maxDay) * 100, 1.5);
+          const endDate = formatDate(addDays(parseDateInput(baseDate), item.end));
+
+          return `
+            <div class="gantt-row">
+              <div class="gantt-row-label" title="${escapeHtml(item.action.acao)}">
+                ${escapeHtml(item.action.id)} — ${escapeHtml(truncate(item.action.acao, 52))}
+              </div>
+
+              <div class="gantt-track">
+                ${todayLine}
+                <div
+                  class="gantt-bar status-bg-${slug(item.action.status)}"
+                  style="left:${left}%; width:${width}%"
+                  data-id="${escapeHtml(item.action.id)}"
+                  tabindex="0"
+                  title="${escapeHtml(item.action.id)} — ${escapeHtml(item.action.acao)} | ${escapeHtml(item.action.status)} | Prazo: ${escapeHtml(item.action.prazo)} | Término previsto: ${escapeHtml(endDate)}"
+                ></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div>
+            <div class="gantt-group-title">${escapeHtml(wave.label)}</div>
+            ${rows}
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <section class="panel">
+          <div class="gantt-controls">
+            <div class="field" style="max-width:280px;">
+              <label for="ganttBaseDate">Data-base do Gantt</label>
+              <input id="ganttBaseDate" type="date" value="${escapeHtml(baseDate)}" />
+            </div>
+
+            <div class="legend" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); display:grid;">
+              ${STATUS_OPTIONS.map((status) => {
+                return `
+                  <span class="legend-item">
+                    <span class="dot status-bg-${slug(status)}"></span>
+                    ${escapeHtml(status)}
+                  </span>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="gantt-scroll">
+            <div class="gantt">
+              ${header}
+              ${groups}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function historyTypeLabel(type) {
+      const labels = {
+        alteracao: 'Alteração',
+        sistema: 'Sistema',
+        importacao: 'Importação',
+        undo: 'Undo',
+        redo: 'Redo'
+      };
+
+      return labels[type] || 'Sistema';
+    }
+
+    function historyEntryTemplate(entry) {
+      const fieldLabel = FIELD_LABELS[entry.field] || entry.field;
+
+      const changeText = entry.field === 'sistema'
+        ? escapeHtml(entry.actionTitle)
+        : `${escapeHtml(fieldLabel)}: ${escapeHtml(truncate(entry.oldValue || 'vazio', 55))} → ${escapeHtml(truncate(entry.newValue || 'vazio', 55))}`;
+
+      return `
+        <article class="history-item">
+          <div class="history-head">
+            <span class="badge type-${slug(entry.type)}">${escapeHtml(historyTypeLabel(entry.type))}</span>
+            <strong>${escapeHtml(entry.user)}</strong>
+            <span class="history-time">${escapeHtml(formatDateTime(entry.timestamp))}</span>
+          </div>
+
+          <div>${changeText}</div>
+
+          ${entry.actionId !== '-'
+            ? `<div class="muted" style="margin-top:0.35rem;">Ação: ${escapeHtml(entry.actionId)}</div>`
+            : ''}
+        </article>
+      `;
+    }
+
+    function renderHistory() {
+      const query = search.value.trim().toLowerCase();
+
+      const entries = (state.history || []).filter((entry) => {
+        if (!query) return true;
+
+        const haystack = [
+          entry.user,
+          entry.actionId,
+          entry.actionTitle,
+          entry.field,
+          entry.oldValue,
+          entry.newValue
+        ].join(' ').toLowerCase();
+
+        return haystack.includes(query);
+      });
+
+      return `
+        <section class="panel">
+          <div class="history-toolbar">
+            <h2 style="margin:0;">Histórico de alterações</h2>
+            <button id="clearHistoryBtn" class="btn danger" type="button">Limpar histórico</button>
+          </div>
+
+          ${entries.length
+            ? `<div class="history-list">${entries.map(historyEntryTemplate).join('')}</div>`
+            : `<div class="empty-small">Nenhum registro de alteração.</div>`}
+        </section>
+      `;
+    }
+
+    function updateViewButtons() {
+      document.querySelectorAll('.view-btn').forEach((button) => {
+        button.classList.toggle('active', button.dataset.view === state.view);
+      });
+    }
+
+    function render() {
+      const filtered = getFilteredActions();
+
+      document.body.dataset.view = state.view;
+
+      if (state.view === 'dashboard') {
+        content.innerHTML = renderDashboard(filtered);
+      } else if (state.view === 'kanban') {
+        content.innerHTML = renderKanban(filtered);
+      } else if (state.view === 'cards') {
+        content.innerHTML = renderCards(filtered);
+      } else if (state.view === 'table') {
+        content.innerHTML = renderTable(filtered);
+      } else if (state.view === 'gantt') {
+        content.innerHTML = renderGantt(filtered);
+      } else if (state.view === 'history') {
+        content.innerHTML = renderHistory();
+      } else {
+        content.innerHTML = `<section class="panel empty">Visualização inválida.</section>`;
+      }
+
+      updateViewButtons();
+      updateDatalist();
+      updateUndoButtons();
+    }
+
+    function openModal(id) {
+      const action = state.actions.find((item) => item.id === id);
+      if (!action) return;
+
+      currentActionId = id;
+
+      const waveLabel = WAVES.find((wave) => wave.id === action.onda)?.label || `Onda ${action.onda}`;
+
+      modalTitle.textContent = `${action.id} — ${action.acao}`;
+
+      modalDetails.innerHTML = `
+        <div>
+          <span>Onda</span>
+          <strong>${escapeHtml(waveLabel)}</strong>
+        </div>
+        <div>
+          <span>Prioridade</span>
+          <strong>${escapeHtml(action.prioridade)}</strong>
+        </div>
+        <div>
+          <span>Entregável</span>
+          <strong>${escapeHtml(action.entregavel)}</strong>
+        </div>
+        <div>
+          <span>Responsável</span>
+          <strong>${escapeHtml(action.responsavel)}</strong>
+        </div>
+        <div>
+          <span>Prazo</span>
+          <strong>${escapeHtml(action.prazo)}</strong>
+        </div>
+        <div>
+          <span>Critério de aceite</span>
+          <strong>${escapeHtml(action.criterio)}</strong>
+        </div>
+        <div>
+          <span>Última atualização</span>
+          <strong>${escapeHtml(action.updatedAt ? formatDateTime(action.updatedAt) : 'Não atualizada')}</strong>
+        </div>
+      `;
+
+      modalStatus.innerHTML = statusOptions(action.status);
+      modalObs.value = action.obs || '';
+
+      overlay.classList.add('open');
+    }
+
+    function closeModalDialog() {
+      currentActionId = null;
+      overlay.classList.remove('open');
+    }
+
+    function download(filename, content, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+
+      anchor.href = url;
+      anchor.download = filename;
+
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? '');
+
+      if (/[;"\n\r]/.test(text)) {
+        return `"${text.replace(/"/g, '""')}"`;
+      }
+
+      return text;
+    }
+
+    function exportCsvFile() {
+      commitActiveInlineInput();
+
+      const headers = [
+        'ID',
+        'Onda',
+        'Prioridade',
+        'Ação',
+        'Entregável',
+        'Responsável',
+        'Prazo',
+        'Critério de aceite',
+        'Status',
+        'Observações',
+        'Atualizado em'
+      ];
+
+      const rows = state.actions.map((action) => [
+        action.id,
+        action.onda,
+        action.prioridade,
+        action.acao,
+        action.entregavel,
+        action.responsavel,
+        action.prazo,
+        action.criterio,
+        action.status,
+        action.obs || '',
+        action.updatedAt || ''
+      ]);
+
+      const csv = '\uFEFF' + [headers, ...rows]
+        .map((row) => row.map(csvEscape).join(';'))
+        .join('\r\n');
+
+      download('plano-acao-codeba-v4.csv', csv, 'text/csv;charset=utf-8');
+      showToast('CSV exportado com sucesso.');
+    }
+
+    function xmlEscape(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+    }
+
+    function exportExcelFile() {
+      commitActiveInlineInput();
+
+      const headers = [
+        'ID',
+        'Onda',
+        'Prioridade',
+        'Ação',
+        'Entregável',
+        'Responsável',
+        'Prazo',
+        'Critério de aceite',
+        'Status',
+        'Observações',
+        'Atualizado em'
+      ];
+
+      const rows = state.actions.map((action) => [
+        action.id,
+        action.onda,
+        action.prioridade,
+        action.acao,
+        action.entregavel,
+        action.responsavel,
+        action.prazo,
+        action.criterio,
+        action.status,
+        action.obs || '',
+        action.updatedAt || ''
+      ]);
+
+      const headerRow = `
+        <Row>
+          ${headers.map((header) => `<Cell><Data ss:Type="String">${xmlEscape(header)}</Data></Cell>`).join('')}
+        </Row>
+      `;
+
+      const bodyRows = rows
+        .map((row) => {
+          return `
+            <Row>
+              ${row.map((cell) => {
+                const type = typeof cell === 'number' ? 'Number' : 'String';
+                return `<Cell><Data ss:Type="${type}">${xmlEscape(cell)}</Data></Cell>`;
+              }).join('')}
+            </Row>
+          `;
+        })
+        .join('');
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+  <Worksheet ss:Name="Plano">
+    <Table>
+      ${headerRow}
+      ${bodyRows}
+    </Table>
+  </Worksheet>
+</Workbook>`;
+
+      download('plano-acao-codeba-v4.xls', xml, 'application/vnd.ms-excel;charset=utf-8');
+      showToast('Excel exportado com sucesso.');
+    }
+
+    function exportJsonFile() {
+      commitActiveInlineInput();
+
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        state
+      };
+
+      download(
+        'plano-acao-codeba-v4-status.json',
+        JSON.stringify(payload, null, 2),
+        'application/json;charset=utf-8'
+      );
+
+      showToast('JSON exportado com sucesso.');
+    }
+
+    function exportHtmlWithState() {
+      commitActiveInlineInput();
+      closeModalDialog();
+
+      const existing = document.getElementById('embedded-state');
+      if (existing) existing.remove();
+
+      const clone = document.documentElement.cloneNode(true);
+      const body = clone.querySelector('body');
+
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        state
+      };
+
+      const safeJson = JSON.stringify(payload)
+        .replace(/&/g, '\\u0026')
+        .replace(/</g, '\\u003c')
+        .replace(/>/g, '\\u003e');
+
+      const stateScript = document.createElement('script');
+      stateScript.type = 'application/json';
+      stateScript.id = 'embedded-state';
+      stateScript.textContent = safeJson;
+
+      body.appendChild(stateScript);
+
+      const html = `<!DOCTYPE html>\n${clone.outerHTML}`;
+
+      download(
+        'plano-acao-codeba-v4-com-status.html',
+        html,
+        'text/html;charset=utf-8'
+      );
+
+      showToast('HTML com status atual exportado.');
+    }
+
+    async function importJsonFile(file) {
+      const text = await file.text();
+
+      try {
+        const parsed = JSON.parse(text);
+        const normalized = normalizeState(parsed);
+
+        if (!normalized) {
+          throw new Error('Formato inválido.');
+        }
+
+        applyImportedState(normalized);
+        showToast('Status importado com sucesso.');
+      } catch (error) {
+        console.error(error);
+        alert('Não foi possível importar o arquivo. Verifique se é um JSON válido exportado por esta aplicação.');
+      }
+    }
+
+    function applyImportedState(normalized) {
+      pushUndo();
+
+      state = hydrate(normalized);
+      logSystem('Status importado.', 'importacao');
+
+      saveState();
+      populateFilters();
+      applyTheme();
+      applyUserLabel();
+      render();
+    }
+
+    function clearHistory() {
+      const confirmed = confirm('Limpar todo o histórico de alterações?');
+      if (!confirmed) return;
+
+      state.history = [];
+      logSystem('Histórico limpo.');
+      saveState();
+      render();
+      showToast('Histórico limpo.');
+    }
+
+    function clearColumnHighlights() {
+      document.querySelectorAll('.kanban-column.drag-over').forEach((column) => {
+        column.classList.remove('drag-over');
+      });
+    }
+
+    function getColumnAt(x, y) {
+      const element = document.elementFromPoint(x, y);
+      return element ? element.closest('.kanban-column') : null;
+    }
+
+    function highlightColumnAt(x, y) {
+      clearColumnHighlights();
+
+      const column = getColumnAt(x, y);
+      if (column) column.classList.add('drag-over');
+    }
+
+    function createDragGhost(card) {
+      const rect = card.getBoundingClientRect();
+      const ghost = card.cloneNode(true);
+
+      ghost.classList.add('drag-ghost');
+      ghost.classList.remove('kanban-card');
+      ghost.style.width = `${rect.width}px`;
+      ghost.style.left = '-9999px';
+      ghost.style.top = '-9999px';
+
+      document.body.appendChild(ghost);
+
+      return ghost;
+    }
+
+    function moveDragGhost(x, y) {
+      if (!dragState || !dragState.ghost) return;
+
+      dragState.ghost.style.left = `${x - dragState.offsetX}px`;
+      dragState.ghost.style.top = `${y - dragState.offsetY}px`;
+    }
+
+    function cleanupPointerDrag() {
+      if (dragState && dragState.ghost) {
+        dragState.ghost.remove();
+      }
+
+      if (dragState && dragState.card) {
+        dragState.card.style.opacity = '';
+        dragState.card.draggable = state.view === 'kanban';
+      }
+
+      document.body.classList.remove('dragging-body');
+      clearColumnHighlights();
+
+      dragState = null;
+    }
+
+    function finishPointerDrag(column) {
+      if (!dragState) return;
+
+      const { id, moved } = dragState;
+
+      if (moved) {
+        suppressClick = true;
+        setTimeout(() => {
+          suppressClick = false;
+        }, 250);
+      }
+
+      cleanupPointerDrag();
+
+      if (column && id) {
+        updateAction(id, { status: column.dataset.status });
+        showToast('Status atualizado no Kanban.');
+      }
+    }
+
+    function bindEvents() {
+      search.addEventListener('input', render);
+      ondaFilter.addEventListener('change', render);
+      statusFilter.addEventListener('change', render);
+      respFilter.addEventListener('change', render);
+      prioFilter.addEventListener('change', render);
+
+      clearFilters.addEventListener('click', () => {
+        search.value = '';
+        ondaFilter.value = 'all';
+        statusFilter.value = 'all';
+        respFilter.value = 'all';
+        prioFilter.value = 'all';
+        render();
+        showToast('Filtros limpos.');
+      });
+
+      document.querySelectorAll('.view-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          state.view = button.dataset.view;
+          saveState();
+          render();
+        });
+      });
+
+      undoBtn.addEventListener('click', undo);
+      redoBtn.addEventListener('click', redo);
+
+      userBtn.addEventListener('click', () => {
+        const name = prompt('Informe seu nome para o histórico de alterações:', state.user);
+
+        if (name && name.trim()) {
+          state.user = name.trim();
+          saveState();
+          applyUserLabel();
+          showToast('Usuário atualizado.');
+        }
+      });
+
+      themeToggle.addEventListener('click', () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        applyTheme();
+        saveState();
+        showToast('Tema alterado.');
+      });
+
+      exportCsv.addEventListener('click', exportCsvFile);
+      exportExcel.addEventListener('click', exportExcelFile);
+      exportJson.addEventListener('click', exportJsonFile);
+      importJsonBtn.addEventListener('click', () => importInput.click());
+      exportHtml.addEventListener('click', exportHtmlWithState);
+
+      importInput.addEventListener('change', async (event) => {
+        const file = event.target.files && event.target.files[0];
+
+        if (file) {
+          await importJsonFile(file);
+        }
+
+        event.target.value = '';
+      });
+
+      printBtn.addEventListener('click', () => {
+        commitActiveInlineInput();
+        window.print();
+      });
+
+      restoreBtn.addEventListener('click', () => {
+        const confirmed = confirm('Restaurar o plano para o estado inicial? Isso remove alterações locais das ações.');
+
+        if (!confirmed) return;
+
+        const preserved = {
+          user: state.user,
+          theme: state.theme,
+          view: state.view,
+          baseDate: state.baseDate
+        };
+
+        pushUndo();
+
+        state = hydrate(null);
+        Object.assign(state, preserved);
+        state.history = [];
+
+        logSystem('Plano restaurado para o padrão.');
+        saveState();
+        populateFilters();
+        applyTheme();
+        applyUserLabel();
+        render();
+
+        showToast('Plano restaurado.');
+      });
+
+      document.addEventListener('change', (event) => {
+        const target = event.target;
+        if (!target) return;
+
+        if (target.id === 'ganttBaseDate') {
+          state.baseDate = target.value || new Date().toISOString().slice(0, 10);
+          saveState();
+          render();
+          return;
+        }
+
+        if (!target.classList) return;
+
+        if (target.classList.contains('quick-status')) {
+          updateAction(target.dataset.id, { status: target.value });
+          showToast('Status atualizado.');
+          return;
+        }
+
+        if (target.classList.contains('editable-responsavel')) {
+          updateAction(target.dataset.id, { responsavel: target.value.trim() || 'Não definido' });
+          showToast('Responsável atualizado.');
+          return;
+        }
+
+        if (target.classList.contains('editable-prazo')) {
+          updateAction(target.dataset.id, { prazo: target.value.trim() || 'A definir' });
+          showToast('Prazo atualizado.');
+        }
+      });
+
+      content.addEventListener('click', (event) => {
+        if (event.target.closest('#clearHistoryBtn')) {
+          clearHistory();
+          return;
+        }
+
+        if (event.target.closest('input, select, textarea, button, label, a, .drag-handle')) return;
+        if (suppressClick) return;
+
+        const target = event.target.closest('[data-id]');
+
+        if (target) {
+          openModal(target.dataset.id);
+        }
+      });
+
+      content.addEventListener('keydown', (event) => {
+        const target = event.target;
+
+        if (
+          event.key === 'Enter' &&
+          target &&
+          target.classList &&
+          (
+            target.classList.contains('editable-responsavel') ||
+            target.classList.contains('editable-prazo')
+          )
+        ) {
+          target.blur();
+          return;
+        }
+
+        if (event.key === 'Enter') {
+          const dataElement = target.closest('[data-id]');
+
+          if (dataElement && !target.closest('input, select, textarea, button, a, .drag-handle')) {
+            openModal(dataElement.dataset.id);
+          }
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeModalDialog();
+          return;
+        }
+
+        const target = event.target;
+        const isEditable = target && target.closest && target.closest('input, textarea, select');
+
+        if ((event.ctrlKey || event.metaKey) && !isEditable) {
+          const key = event.key.toLowerCase();
+
+          if (key === 'z' && !event.shiftKey) {
+            event.preventDefault();
+            undo();
+            return;
+          }
+
+          if ((key === 'z' && event.shiftKey) || key === 'y') {
+            event.preventDefault();
+            redo();
+          }
+        }
+      });
+
+      content.addEventListener('dragstart', (event) => {
+        const card = event.target.closest('.kanban-card');
+        if (!card || dragState) return;
+
+        html5DragId = card.dataset.id;
+
+        event.dataTransfer.setData('text/plain', html5DragId);
+        event.dataTransfer.effectAllowed = 'move';
+
+        card.classList.add('dragging');
+      });
+
+      content.addEventListener('dragend', (event) => {
+        const card = event.target.closest('.kanban-card');
+        if (card) card.classList.remove('dragging');
+
+        html5DragId = null;
+        clearColumnHighlights();
+      });
+
+      content.addEventListener('dragover', (event) => {
+        const column = event.target.closest('.kanban-column');
+        if (!column || !html5DragId) return;
+
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+
+        clearColumnHighlights();
+        column.classList.add('drag-over');
+      });
+
+      content.addEventListener('dragleave', (event) => {
+        const column = event.target.closest('.kanban-column');
+        if (!column) return;
+
+        if (!column.contains(event.relatedTarget)) {
+          column.classList.remove('drag-over');
+        }
+      });
+
+      content.addEventListener('drop', (event) => {
+        const column = event.target.closest('.kanban-column');
+        if (!column || !html5DragId) return;
+
+        event.preventDefault();
+
+        const id = html5DragId;
+        const status = column.dataset.status;
+
+        clearColumnHighlights();
+        html5DragId = null;
+
+        if (id && status) {
+          updateAction(id, { status });
+          showToast('Status atualizado no Kanban.');
+        }
+      });
+
+      content.addEventListener('pointerdown', (event) => {
+        const handle = event.target.closest('.drag-handle');
+        if (!handle) return;
+
+        const card = handle.closest('.kanban-card');
+        if (!card) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        card.draggable = false;
+
+        const rect = card.getBoundingClientRect();
+
+        dragState = {
+          id: card.dataset.id,
+          card,
+          ghost: createDragGhost(card),
+          offsetX: event.clientX - rect.left,
+          offsetY: event.clientY - rect.top,
+          moved: false
+        };
+
+        card.style.opacity = '0.55';
+        document.body.classList.add('dragging-body');
+
+        moveDragGhost(event.clientX, event.clientY);
+      });
+
+      document.addEventListener('pointermove', (event) => {
+        if (!dragState) return;
+
+        event.preventDefault();
+
+        dragState.moved = true;
+
+        moveDragGhost(event.clientX, event.clientY);
+        highlightColumnAt(event.clientX, event.clientY);
+      }, { passive: false });
+
+      document.addEventListener('pointerup', (event) => {
+        if (!dragState) return;
+
+        const column = getColumnAt(event.clientX, event.clientY);
+        finishPointerDrag(column);
+      });
+
+      document.addEventListener('pointercancel', () => {
+        cleanupPointerDrag();
+      });
+
+      closeModal.addEventListener('click', closeModalDialog);
+
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) closeModalDialog();
+      });
+
+      saveAction.addEventListener('click', () => {
+        if (!currentActionId) return;
+
+        updateAction(currentActionId, {
+          status: modalStatus.value,
+          obs: modalObs.value
+        });
+
+        closeModalDialog();
+        showToast('Ação salva com sucesso.');
+      });
+
+      window.addEventListener('beforeunload', () => {
+        saveLocalStorage();
+      });
+    }
+
+    async function init() {
+      let saved = null;
+
+      try {
+        saved = normalizeState(await idbGetState());
+      } catch (error) {
+        saved = null;
+      }
+
+      const embedded = normalizeState(getEmbeddedState());
+      const local = normalizeState(loadLocalStorage());
+
+      const chosen = chooseInitialState(saved, embedded, local);
+
+      state = hydrate(chosen);
+
+      applyTheme();
+      applyUserLabel();
+      populateFilters();
+      bindEvents();
+      render();
+    }
+
+    init();
+  </script>
+</body>
+</html>
