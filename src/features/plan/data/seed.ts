@@ -4,7 +4,7 @@ import type { ActionSeed } from "../types";
 export const INITIAL_ACTIONS: ActionSeed[] = [
   {
     id: "A-01",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Formalizar Grupo de Trabalho para revisão da norma",
     entregavel: "Portaria, ata ou despacho interno",
@@ -14,7 +14,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-02",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Elaborar cronograma detalhado de revisão",
     entregavel: "Cronograma com responsáveis e marcos",
@@ -24,7 +24,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-03",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Preencher a Seção 3 — Definições e Siglas",
     entregavel: "Glossário técnico",
@@ -34,7 +34,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-04",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Preencher a Seção 4 — Documentos de Referência",
     entregavel: "Lista atualizada de referências legais e técnicas",
@@ -44,7 +44,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-05",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Redigir a Seção 8.8 — Mobilização",
     entregavel: "Procedimento de mobilização",
@@ -54,7 +54,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-06",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Redigir a Seção 8.9 — Desmobilização",
     entregavel: "Procedimento de desmobilização",
@@ -64,7 +64,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-07",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao:
       "Sanear forma documental: numeração, duplicidade, placeholders e lacunas",
@@ -75,7 +75,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-09",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao:
       "Resolver inconsistência sobre designação e presunção do Comandante do Incidente",
@@ -86,7 +86,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-01",
-    onda: 1,
+    fase: 1,
     prioridade: "Alta",
     acao: "Elaborar matriz de responsabilidades (RACI)",
     entregavel: "Matriz RACI",
@@ -96,7 +96,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-12",
-    onda: 1,
+    fase: 1,
     prioridade: "Crítica",
     acao: "Submeter à validação jurídica",
     entregavel: "Parecer ou manifestação jurídica",
@@ -106,7 +106,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "A-10",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Revisar a Seção 15 — Distribuição e Publicidade",
     entregavel: "Matriz de distribuição e publicidade",
@@ -116,7 +116,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-01",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao:
       "Definir níveis de resposta com gatilhos objetivos de escalonamento",
@@ -127,7 +127,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-03",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Definir canais alternativos de acionamento",
     entregavel: "Procedimento de ativação redundante",
@@ -137,7 +137,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-05",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao:
       "Detalhar cadeia de sucessão de comando e autoridade substituta de ativação",
@@ -148,7 +148,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-06",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Criar procedimento de transferência de comando",
     entregavel: "Formulário/checklist de transferência",
@@ -158,7 +158,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-07",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Definir efetivo mínimo por porto e turno",
     entregavel: "Tabela de dimensionamento",
@@ -168,7 +168,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-08",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Definir tempos de resposta de referência",
     entregavel: "Metas de tempo por área/porto",
@@ -178,7 +178,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-09",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao:
       "Definir Posto de Comando (principal/alternativo) e recursos mínimos",
@@ -189,7 +189,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-11",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao:
       "Revisar capacitação SCI, aproveitamento mínimo e formação de sucessores",
@@ -200,7 +200,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-12",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Revisar frequência de simulados e exercícios",
     entregavel: "Programa anual de exercícios",
@@ -210,7 +210,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-13",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Revisar critérios de seleção de brigadistas",
     entregavel: "Matriz com pesos, nota de corte e responsáveis",
@@ -220,7 +220,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-14",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Revisar critérios de aptidão médica e psicológica",
     entregavel: "Requisitos mínimos e fluxo de avaliação",
@@ -230,7 +230,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-15",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Definir lista de formulários SCI aplicáveis",
     entregavel: "Relação de formulários e modelos",
@@ -240,7 +240,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-16",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Revisar indicadores de prontidão e rotina de auditoria",
     entregavel: "Painel de indicadores e relatório periódico de prontidão",
@@ -250,7 +250,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-17",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Criar procedimento de Análise Pós-Ação",
     entregavel: "Modelo de AAR e fluxo de ações corretivas",
@@ -260,7 +260,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-18",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Validar a norma com as equipes dos três portos",
     entregavel: "Reuniões técnicas e registros de contribuição",
@@ -270,7 +270,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "B-19",
-    onda: 2,
+    fase: 2,
     prioridade: "Alta",
     acao: "Realizar exercício de mesa ou simulado de validação",
     entregavel: "Relatório de validação operacional",
@@ -280,7 +280,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-02",
-    onda: 3,
+    fase: 3,
     prioridade: "Alta",
     acao: "Integrar o SCI aos planos existentes",
     entregavel: "Matriz de integração com PAM, PEI, PSP, PCE, PAE e PCN",
@@ -290,7 +290,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-03",
-    onda: 3,
+    fase: 3,
     prioridade: "Média",
     acao: "Incluir procedimentos para incidentes com múltiplas vítimas",
     entregavel: "Protocolo de IMV",
@@ -300,7 +300,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-04",
-    onda: 3,
+    fase: 3,
     prioridade: "Média",
     acao: "Incluir procedimento de preservação de cena",
     entregavel: "Diretrizes para investigação",
@@ -310,7 +310,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-05",
-    onda: 3,
+    fase: 3,
     prioridade: "Média",
     acao: "Incluir contingência para falha de sistemas e infraestrutura de TI",
     entregavel: "Procedimento de contingência de sistemas",
@@ -320,7 +320,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-07",
-    onda: 3,
+    fase: 3,
     prioridade: "Média",
     acao: "Definir interoperabilidade com órgãos externos",
     entregavel: "Matriz de comunicação",
@@ -330,7 +330,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
   },
   {
     id: "C-08",
-    onda: 3,
+    fase: 3,
     prioridade: "Média",
     acao: "Estabelecer ciclo de revisão da norma",
     entregavel: "Regra de revisão periódica",

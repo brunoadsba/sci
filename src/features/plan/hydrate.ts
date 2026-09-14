@@ -1,4 +1,9 @@
-import { HISTORY_MAX, STATUS_OPTIONS, VALID_VIEWS } from "./constants";
+import {
+  DEFAULT_OPERATOR,
+  HISTORY_MAX,
+  STATUS_OPTIONS,
+  VALID_VIEWS,
+} from "./constants";
 import { INITIAL_ACTIONS } from "./data/seed";
 import { importPayloadSchema } from "./schemas";
 import type {
@@ -16,6 +21,12 @@ function sanitizeStatus(value: unknown): StatusAcao {
     : "Não iniciado";
 }
 
+function sanitizeOperator(value: unknown): string {
+  const raw = String(value ?? "").trim();
+  if (!raw || raw === "Usuário local") return DEFAULT_OPERATOR;
+  return raw.slice(0, 80);
+}
+
 function sanitizeHistory(history: unknown): HistoryEntry[] {
   if (!Array.isArray(history)) return [];
 
@@ -29,7 +40,7 @@ function sanitizeHistory(history: unknown): HistoryEntry[] {
       return {
         id: item.id || uid(),
         timestamp: item.timestamp || new Date().toISOString(),
-        user: item.user || "Usuário local",
+        user: sanitizeOperator(item.user),
         actionId: item.actionId || "-",
         actionTitle: item.actionTitle || "",
         field: item.field || "obs",
@@ -46,7 +57,7 @@ export function createDefaultState(): AppState {
   return {
     theme: "light",
     view: "dashboard",
-    user: "Usuário local",
+    user: DEFAULT_OPERATOR,
     baseDate: now.slice(0, 10),
     updatedAt: now,
     history: [],
@@ -61,10 +72,21 @@ export function createDefaultState(): AppState {
 export function hydrate(rawState: unknown): AppState {
   const source =
     rawState && typeof rawState === "object"
-      ? (rawState as Partial<AppState>)
+      ? (rawState as Record<string, unknown>)
       : null;
+
+  const rawActions = Array.isArray(source?.actions)
+    ? (source.actions as Record<string, unknown>[])
+    : [];
+
   const savedMap = new Map(
-    (source?.actions || []).map((item) => [item.id, item])
+    rawActions.map((item) => {
+      const normalized = {
+        ...item,
+        fase: item.fase ?? item.onda,
+      };
+      return [String(item.id), normalized as Partial<ActionItem> & { id: string }];
+    })
   );
 
   return {
@@ -72,9 +94,15 @@ export function hydrate(rawState: unknown): AppState {
     view: VALID_VIEWS.includes(source?.view as AppState["view"])
       ? (source!.view as AppState["view"])
       : "dashboard",
-    user: source?.user || "Usuário local",
-    baseDate: source?.baseDate || new Date().toISOString().slice(0, 10),
-    updatedAt: source?.updatedAt || new Date().toISOString(),
+    user: sanitizeOperator(source?.user),
+    baseDate:
+      typeof source?.baseDate === "string"
+        ? source.baseDate
+        : new Date().toISOString().slice(0, 10),
+    updatedAt:
+      typeof source?.updatedAt === "string"
+        ? source.updatedAt
+        : new Date().toISOString(),
     history: sanitizeHistory(source?.history),
     actions: INITIAL_ACTIONS.map((action) => {
       const saved = savedMap.get(action.id) || ({} as Partial<ActionItem>);

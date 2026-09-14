@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useDeferredValue, useMemo, useState } from "react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import { VALID_VIEWS, VIEW_LABELS } from "../constants";
 import { usePlan } from "../hooks/use-plan";
-import { filterActions, uniqueResponsaveis } from "../lib/filters";
+import { filterActions, uniqueResponsaveis, countByStatus } from "../lib/filters";
 import type { ActionItem, ViewMode } from "../types";
 import { PlanFiltersBar, usePlanFilters } from "./plan-filters";
 import { PlanToolbar } from "./plan-toolbar";
@@ -15,6 +16,7 @@ import { CronogramaView } from "./cronograma-view";
 import { HistoryView } from "./history-view";
 import { ActionDetailDialog } from "./action-detail-dialog";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 const viewParser = parseAsStringEnum<ViewMode>([...VALID_VIEWS]).withDefault(
@@ -31,14 +33,14 @@ export function PlanApp() {
   const filterValues = useMemo(
     () => ({
       search: deferredSearch,
-      onda: filters.onda,
+      fase: filters.fase,
       status: filters.status,
       responsavel: filters.responsavel,
       prioridade: filters.prioridade,
     }),
     [
       deferredSearch,
-      filters.onda,
+      filters.fase,
       filters.status,
       filters.responsavel,
       filters.prioridade,
@@ -49,6 +51,12 @@ export function PlanApp() {
     () => filterActions(state.actions, filterValues),
     [state.actions, filterValues]
   );
+
+  const progress = useMemo(() => {
+    const counts = countByStatus(state.actions);
+    const total = state.actions.length;
+    return total === 0 ? 0 : Math.round((counts.Concluído / total) * 100);
+  }, [state.actions]);
 
   const activeAction: ActionItem | null = useMemo(
     () => state.actions.find((a) => a.id === openId) ?? null,
@@ -75,23 +83,43 @@ export function PlanApp() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <header className="sticky top-0 z-40 border-b bg-card/95 shadow-sm backdrop-blur print:hidden">
+      <header className="sticky top-0 z-40 border-b bg-card/95 backdrop-blur print:hidden">
         <div className="mx-auto flex max-w-[1820px] flex-col gap-3 px-3 py-3 sm:px-4">
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight sm:text-xl">
-              Plano de Ação SCI/EOR — CODEBA
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              NO.S8.8.DIP.01 · Persistência local com autosave · Single-user
-            </p>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="rounded-md bg-white px-2 py-1 shadow-sm ring-1 ring-border/60">
+                <Image
+                  src="/logo-codeba.png"
+                  alt="Autoridade Portuária CODEBA"
+                  width={160}
+                  height={40}
+                  className="h-7 w-auto sm:h-9"
+                  priority
+                />
+              </div>
+              <div className="min-w-0">
+                <h1 className="truncate text-base font-semibold tracking-tight sm:text-lg">
+                  Plano de Ação SCI/EOR — CODEBA
+                </h1>
+                <p className="truncate text-xs text-muted-foreground sm:text-sm">
+                  NO.S8.8.DIP.01 · Acompanhamento da revisão normativa
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="secondary" className="font-medium">
+                Progresso {progress}%
+              </Badge>
+              <PlanToolbar />
+            </div>
           </div>
-          <PlanToolbar />
         </div>
       </header>
 
       <main className="mx-auto grid max-w-[1820px] gap-4 px-3 py-4 sm:px-4">
         <nav
-          className="flex gap-2 overflow-x-auto rounded-xl border bg-card p-2 shadow-sm print:hidden"
+          className="flex gap-1 overflow-x-auto rounded-xl border bg-card p-1 print:hidden"
           aria-label="Modos de visualização"
         >
           {VALID_VIEWS.map((item) => (
@@ -100,7 +128,10 @@ export function PlanApp() {
               type="button"
               size="sm"
               variant={view === item ? "default" : "ghost"}
-              className={cn("shrink-0", view === item && "pointer-events-none")}
+              className={cn(
+                "shrink-0",
+                view === item && "pointer-events-none"
+              )}
               aria-pressed={view === item}
               onClick={() => void changeView(item)}
             >

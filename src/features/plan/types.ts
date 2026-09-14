@@ -4,7 +4,7 @@ export type StatusAcao =
   | "Concluído"
   | "Bloqueado";
 
-export type Onda = 1 | 2 | 3;
+export type Fase = 1 | 2 | 3;
 export type Prioridade = "Crítica" | "Alta" | "Média";
 export type ViewMode =
   | "dashboard"
@@ -17,7 +17,7 @@ export type HistoryType = "alteracao" | "importacao";
 
 export interface ActionSeed {
   id: string;
-  onda: Onda;
+  fase: Fase;
   prioridade: Prioridade;
   acao: string;
   entregavel: string;
@@ -55,15 +55,15 @@ export interface AppState {
   actions: ActionItem[];
 }
 
-export interface WaveDef {
-  id: Onda;
+export interface PhaseDef {
+  id: Fase;
   label: string;
   prazo: string;
   startDay: number;
 }
 
-export interface WaveMilestone {
-  onda: Onda;
+export interface PhaseMilestone {
+  fase: Fase;
   label: string;
   prazo: string;
 }

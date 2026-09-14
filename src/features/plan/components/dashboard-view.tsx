@@ -1,6 +1,6 @@
 "use client";
 
-import { WAVE_MILESTONES, WAVES } from "../constants";
+import { PHASE_MILESTONES, PHASES } from "../constants";
 import type { ActionItem } from "../types";
 import { countByStatus } from "../lib/filters";
 import { PriorityBadge, StatusBadge } from "./status-badge";
@@ -17,15 +17,13 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
   const progress =
     total === 0 ? 0 : Math.round((counts.Concluído / total) * 100);
   const criticas = actions.filter(
-    (a) =>
-      a.prioridade === "Crítica" &&
-      a.status !== "Concluído"
+    (a) => a.prioridade === "Crítica" && a.status !== "Concluído"
   );
 
-  const byWave = WAVES.map((wave) => {
-    const items = actions.filter((a) => a.onda === wave.id);
+  const byPhase = PHASES.map((phase) => {
+    const items = actions.filter((a) => a.fase === phase.id);
     const done = items.filter((a) => a.status === "Concluído").length;
-    return { wave, total: items.length, done };
+    return { phase, total: items.length, done };
   });
 
   return (
@@ -42,8 +40,8 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
       </section>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
+        <Card className="shadow-none">
+          <CardHeader className="pb-3">
             <CardTitle className="text-base">Status</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3">
@@ -69,21 +67,22 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Progresso por onda</CardTitle>
+        <Card className="shadow-none">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Progresso por fase</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3">
-            {byWave.map(({ wave, total: t, done }) => {
+            {byPhase.map(({ phase, total: t, done }) => {
               const pct = t ? Math.round((done / t) * 100) : 0;
               return (
-                <div key={wave.id} className="grid gap-1">
-                  <div className="flex justify-between text-sm">
-                    <span>Onda {wave.id}</span>
+                <div key={phase.id} className="grid gap-1">
+                  <div className="flex justify-between gap-2 text-sm">
+                    <span className="font-medium">Fase {phase.id}</span>
                     <span className="text-muted-foreground">
                       {done}/{t} ({pct}%)
                     </span>
                   </div>
+                  <p className="text-xs text-muted-foreground">{phase.prazo}</p>
                   <div className="h-2 overflow-hidden rounded-full bg-muted">
                     <div
                       className="h-full rounded-full bg-primary/80"
@@ -93,9 +92,9 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
                 </div>
               );
             })}
-            <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              {WAVE_MILESTONES.map((m) => (
-                <li key={`${m.onda}-${m.label}`}>
+            <ul className="mt-2 space-y-1 border-t pt-3 text-sm text-muted-foreground">
+              {PHASE_MILESTONES.map((m) => (
+                <li key={`${m.fase}-${m.label}`}>
                   {m.label} ({m.prazo})
                 </li>
               ))}
@@ -104,8 +103,8 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
+      <Card className="shadow-none">
+        <CardHeader className="pb-3">
           <CardTitle className="text-base">Críticas em aberto</CardTitle>
         </CardHeader>
         <CardContent>
@@ -141,7 +140,7 @@ export function DashboardView({ actions, onOpen }: DashboardViewProps) {
 
 function Kpi({ title, value }: { title: string; value: string }) {
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardContent className="pt-4">
         <p className="text-xs text-muted-foreground">{title}</p>
         <p className="mt-1 text-2xl font-semibold tracking-tight">{value}</p>

@@ -12,13 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PRIORITIES, STATUS_OPTIONS, WAVES } from "../constants";
+import { PHASES, PRIORITIES, STATUS_OPTIONS } from "../constants";
 import { usePlan } from "../hooks/use-plan";
 import { uniqueResponsaveis, type PlanFilters } from "../lib/filters";
 
 export function usePlanFilters(): PlanFilters & {
   setSearch: (v: string) => void;
-  setOnda: (v: string) => void;
+  setFase: (v: string) => void;
   setStatus: (v: string) => void;
   setResponsavel: (v: string) => void;
   setPrioridade: (v: string) => void;
@@ -28,9 +28,13 @@ export function usePlanFilters(): PlanFilters & {
     "q",
     parseAsString.withDefault("").withOptions({ shallow: true })
   );
-  const [onda, setOnda] = useQueryState(
-    "onda",
+  const [fase, setFase] = useQueryState(
+    "fase",
     parseAsString.withDefault("all").withOptions({ shallow: true })
+  );
+  const [legacyOnda] = useQueryState(
+    "onda",
+    parseAsString.withDefault("").withOptions({ shallow: true })
   );
   const [status, setStatus] = useQueryState(
     "status",
@@ -45,20 +49,23 @@ export function usePlanFilters(): PlanFilters & {
     parseAsString.withDefault("all").withOptions({ shallow: true })
   );
 
+  const resolvedFase =
+    fase !== "all" ? fase : legacyOnda && legacyOnda !== "all" ? legacyOnda : "all";
+
   return {
     search,
-    onda,
+    fase: resolvedFase,
     status,
     responsavel,
     prioridade,
     setSearch,
-    setOnda,
+    setFase,
     setStatus,
     setResponsavel,
     setPrioridade,
     clear: () => {
       void setSearch("");
-      void setOnda("all");
+      void setFase("all");
       void setStatus("all");
       void setResponsavel("all");
       void setPrioridade("all");
@@ -76,7 +83,7 @@ export function PlanFiltersBar() {
 
   return (
     <section
-      className="grid gap-3 rounded-xl border bg-card p-4 shadow-sm md:grid-cols-2 lg:grid-cols-6"
+      className="grid gap-3 rounded-xl border bg-card p-3 md:grid-cols-2 lg:grid-cols-6"
       aria-label="Filtros"
     >
       <div className="grid gap-1.5 lg:col-span-2">
@@ -87,23 +94,24 @@ export function PlanFiltersBar() {
           value={filters.search}
           onChange={(e) => void filters.setSearch(e.target.value)}
           placeholder="ID, ação, responsável, prazo..."
+          className="h-9"
         />
       </div>
 
       <div className="grid gap-1.5">
-        <Label>Onda</Label>
+        <Label>Fase</Label>
         <Select
-          value={filters.onda}
-          onValueChange={(v) => void filters.setOnda(v)}
+          value={filters.fase}
+          onValueChange={(v) => void filters.setFase(v)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="h-9 w-full">
             <SelectValue placeholder="Todas" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Todas</SelectItem>
-            {WAVES.map((wave) => (
-              <SelectItem key={wave.id} value={String(wave.id)}>
-                Onda {wave.id}
+            {PHASES.map((phase) => (
+              <SelectItem key={phase.id} value={String(phase.id)}>
+                Fase {phase.id}
               </SelectItem>
             ))}
           </SelectContent>
@@ -116,7 +124,7 @@ export function PlanFiltersBar() {
           value={filters.status}
           onValueChange={(v) => void filters.setStatus(v)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="h-9 w-full">
             <SelectValue placeholder="Todos" />
           </SelectTrigger>
           <SelectContent>
@@ -136,7 +144,7 @@ export function PlanFiltersBar() {
           value={filters.responsavel}
           onValueChange={(v) => void filters.setResponsavel(v)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="h-9 w-full">
             <SelectValue placeholder="Todos" />
           </SelectTrigger>
           <SelectContent>
@@ -156,7 +164,7 @@ export function PlanFiltersBar() {
           value={filters.prioridade}
           onValueChange={(v) => void filters.setPrioridade(v)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="h-9 w-full">
             <SelectValue placeholder="Todas" />
           </SelectTrigger>
           <SelectContent>
@@ -171,7 +179,7 @@ export function PlanFiltersBar() {
       </div>
 
       <div className="flex items-end lg:col-span-6">
-        <Button type="button" variant="outline" onClick={filters.clear}>
+        <Button type="button" variant="outline" size="sm" onClick={filters.clear}>
           Limpar filtros
         </Button>
       </div>

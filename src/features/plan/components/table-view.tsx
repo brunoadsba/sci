@@ -21,25 +21,22 @@ export function TableView({ actions, onOpen }: TableViewProps) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border bg-card shadow-sm">
+    <div className="overflow-x-auto rounded-xl border bg-card">
       <table className="w-full min-w-[1100px] border-collapse text-sm">
-        <thead className="bg-muted/50 text-left">
+        <thead className="sticky top-0 z-10 bg-muted/90 text-left backdrop-blur">
           <tr>
-            <th className="px-3 py-2 font-medium">ID</th>
-            <th className="px-3 py-2 font-medium">Onda</th>
-            <th className="px-3 py-2 font-medium">Prioridade</th>
-            <th className="px-3 py-2 font-medium">Ação</th>
-            <th className="px-3 py-2 font-medium">Status</th>
-            <th className="px-3 py-2 font-medium">Responsável</th>
-            <th className="px-3 py-2 font-medium">Prazo</th>
+            <th className="px-3 py-2.5 font-medium">ID</th>
+            <th className="px-3 py-2.5 font-medium">Fase</th>
+            <th className="px-3 py-2.5 font-medium">Prioridade</th>
+            <th className="px-3 py-2.5 font-medium">Ação</th>
+            <th className="px-3 py-2.5 font-medium">Status</th>
+            <th className="px-3 py-2.5 font-medium">Responsável</th>
+            <th className="px-3 py-2.5 font-medium">Prazo</th>
           </tr>
         </thead>
         <tbody>
           {actions.map((action) => (
-            <tr
-              key={action.id}
-              className="border-t hover:bg-muted/30"
-            >
+            <tr key={action.id} className="border-t hover:bg-muted/30">
               <td className="px-3 py-2 font-mono text-xs">
                 <button
                   type="button"
@@ -49,7 +46,7 @@ export function TableView({ actions, onOpen }: TableViewProps) {
                   {action.id}
                 </button>
               </td>
-              <td className="px-3 py-2">{action.onda}</td>
+              <td className="px-3 py-2">{action.fase}</td>
               <td className="px-3 py-2">
                 <PriorityBadge prioridade={action.prioridade} />
               </td>
@@ -81,7 +78,7 @@ export function TableView({ actions, onOpen }: TableViewProps) {
 
 export function EmptyPanel({ message }: { message: string }) {
   return (
-    <div className="rounded-xl border bg-card p-8 text-center text-sm text-muted-foreground shadow-sm">
+    <div className="rounded-xl border bg-card p-8 text-center text-sm text-muted-foreground">
       {message}
     </div>
   );

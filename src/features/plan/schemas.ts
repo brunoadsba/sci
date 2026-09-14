@@ -8,7 +8,7 @@ export const statusSchema = z.enum([
 ]);
 
 export const prioridadeSchema = z.enum(["Crítica", "Alta", "Média"]);
-export const ondaSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
+export const faseSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
 export const viewSchema = z.enum([
   "dashboard",
   "kanban",
@@ -19,7 +19,7 @@ export const viewSchema = z.enum([
 
 export const actionItemSchema = z.object({
   id: z.string().min(1).max(32),
-  onda: ondaSchema,
+  fase: faseSchema,
   prioridade: prioridadeSchema,
   acao: z.string().max(500),
   entregavel: z.string().max(500),
@@ -30,6 +30,12 @@ export const actionItemSchema = z.object({
   obs: z.string().max(4000).default(""),
   updatedAt: z.string().optional(),
   bloqueioMotivo: z.string().max(500).optional(),
+});
+
+/** Import aceita `fase` ou legado `onda`. */
+export const importActionSchema = actionItemSchema.partial().extend({
+  id: z.string().min(1),
+  onda: faseSchema.optional(),
 });
 
 export const historyEntrySchema = z.object({
@@ -47,7 +53,7 @@ export const historyEntrySchema = z.object({
 export const appStateSchema = z.object({
   theme: z.enum(["light", "dark"]).default("light"),
   view: viewSchema.default("dashboard"),
-  user: z.string().max(80).default("Usuário local"),
+  user: z.string().max(80).default("Operador"),
   baseDate: z.string().default(() => new Date().toISOString().slice(0, 10)),
   updatedAt: z.string(),
   history: z.array(historyEntrySchema).max(200).default([]),
@@ -62,14 +68,7 @@ export const importPayloadSchema = z.object({
   user: z.string().max(80).optional(),
   baseDate: z.string().optional(),
   history: z.array(historyEntrySchema).max(200).optional(),
-  actions: z
-    .array(
-      actionItemSchema.partial().extend({
-        id: z.string().min(1),
-      })
-    )
-    .max(100)
-    .optional(),
+  actions: z.array(importActionSchema).max(100).optional(),
 });
 
 export type ImportPayload = z.infer<typeof importPayloadSchema>;

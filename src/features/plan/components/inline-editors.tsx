@@ -22,7 +22,7 @@ export function StatusSelect({ action }: { action: ActionItem }) {
       }
     >
       <SelectTrigger
-        className="h-9 min-w-[9.5rem]"
+        className="h-8 min-w-[9.5rem]"
         onClick={(e) => e.stopPropagation()}
         aria-label={`Status de ${action.id}`}
       >
@@ -44,7 +44,7 @@ export function ResponsavelInput({ action }: { action: ActionItem }) {
   return (
     <Input
       key={`${action.id}-resp-${action.responsavel}`}
-      className="h-9 min-w-[8rem]"
+      className="h-8 min-w-[8rem]"
       defaultValue={action.responsavel}
       list="responsaveis-list"
       aria-label={`Responsável de ${action.id}`}
@@ -67,7 +67,7 @@ export function PrazoInput({ action }: { action: ActionItem }) {
   return (
     <Input
       key={`${action.id}-prazo-${action.prazo}`}
-      className="h-9 min-w-[5.5rem]"
+      className="h-8 min-w-[5.5rem]"
       defaultValue={action.prazo}
       aria-label={`Prazo de ${action.id}`}
       onClick={(e) => e.stopPropagation()}

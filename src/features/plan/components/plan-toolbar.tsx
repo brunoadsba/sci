@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import {
   ChevronDown,
   Download,
+  MoreHorizontal,
   Moon,
   Redo2,
   Sun,
@@ -17,8 +18,28 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { usePlan } from "@/features/plan/hooks/use-plan";
 import {
   exportCsv,
@@ -41,10 +62,17 @@ export function PlanToolbar() {
   } = usePlan();
   const { setTheme: setNextTheme, resolvedTheme } = useTheme();
   const fileRef = useRef<HTMLInputElement>(null);
+  const [operatorOpen, setOperatorOpen] = useState(false);
+  const [operatorName, setOperatorName] = useState(state.user);
+  const [restoreOpen, setRestoreOpen] = useState(false);
 
   useEffect(() => {
     setNextTheme(state.theme);
   }, [state.theme, setNextTheme]);
+
+  useEffect(() => {
+    setOperatorName(state.user);
+  }, [state.user]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -72,18 +100,6 @@ export function PlanToolbar() {
     setNextTheme(next);
   }
 
-  function handleUser() {
-    const value = window.prompt("Nome do usuário local", state.user);
-    if (value && value.trim()) setUser(value.trim());
-  }
-
-  function handleRestore() {
-    const ok = window.confirm(
-      "Restaurar o plano ao estado inicial? Status, observações e histórico editável serão perdidos."
-    );
-    if (ok) restore();
-  }
-
   async function onImportFile(file: File) {
     try {
       const text = await file.text();
@@ -95,78 +111,90 @@ export function PlanToolbar() {
   }
 
   return (
-    <div className="flex flex-wrap gap-2" aria-label="Ações gerais">
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        disabled={!canUndo}
-        onClick={undo}
-      >
-        <Undo2 /> Desfazer
-      </Button>
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        disabled={!canRedo}
-        onClick={redo}
-      >
-        <Redo2 /> Refazer
-      </Button>
-      <Button type="button" variant="outline" size="sm" onClick={handleUser}>
-        <UserRound /> {state.user}
-      </Button>
-      <Button type="button" variant="outline" size="sm" onClick={toggleTheme}>
-        {resolvedTheme === "dark" ? <Sun /> : <Moon />}
-        {state.theme === "dark" ? "Tema claro" : "Tema escuro"}
-      </Button>
+    <>
+      <div className="flex flex-wrap items-center gap-1.5" aria-label="Ações gerais">
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          disabled={!canUndo}
+          onClick={undo}
+          aria-label="Desfazer"
+        >
+          <Undo2 />
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          disabled={!canRedo}
+          onClick={redo}
+          aria-label="Refazer"
+        >
+          <Redo2 />
+        </Button>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button type="button" variant="outline" size="sm">
-            <Download /> Exportar <ChevronDown />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem
-            onClick={() => {
-              exportJson(state);
-              toast.success("JSON exportado");
-            }}
-          >
-            JSON (backup)
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              exportCsv(state);
-              toast.success("CSV exportado");
-            }}
-          >
-            CSV
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              exportHtmlSnapshot(state);
-              toast.success("HTML exportado");
-            }}
-          >
-            HTML com status
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button type="button" variant="outline" size="sm">
+              <Download /> Exportar <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={() => {
+                exportJson(state);
+                toast.success("JSON exportado");
+              }}
+            >
+              JSON (backup)
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                exportCsv(state);
+                toast.success("CSV exportado");
+              }}
+            >
+              CSV
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                exportHtmlSnapshot(state);
+                toast.success("HTML exportado");
+              }}
+            >
+              HTML com status
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        onClick={() => fileRef.current?.click()}
-      >
-        <Upload /> Importar
-      </Button>
-      <Button type="button" variant="destructive" size="sm" onClick={handleRestore}>
-        Restaurar
-      </Button>
+        <Button type="button" variant="outline" size="icon-sm" onClick={toggleTheme} aria-label="Alternar tema">
+          {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+        </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button type="button" variant="outline" size="icon-sm" aria-label="Mais opções">
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setOperatorOpen(true)}>
+              <UserRound /> Operador: {state.user}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => fileRef.current?.click()}>
+              <Upload /> Importar JSON
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              variant="destructive"
+              onClick={() => setRestoreOpen(true)}
+            >
+              Restaurar plano
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
 
       <input
         ref={fileRef}
@@ -179,6 +207,64 @@ export function PlanToolbar() {
           e.target.value = "";
         }}
       />
-    </div>
+
+      <Dialog open={operatorOpen} onOpenChange={setOperatorOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Operador</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-2">
+            <Label htmlFor="operatorName">
+              Nome usado no histórico de alterações
+            </Label>
+            <Input
+              id="operatorName"
+              value={operatorName}
+              onChange={(e) => setOperatorName(e.target.value)}
+              maxLength={80}
+              autoFocus
+            />
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setOperatorOpen(false)}>
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                const value = operatorName.trim();
+                if (value) setUser(value);
+                setOperatorOpen(false);
+              }}
+            >
+              Salvar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={restoreOpen} onOpenChange={setRestoreOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Restaurar o plano?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Status, observações e histórico editável serão perdidos. O
+              operador e o tema serão mantidos.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                restore();
+                setRestoreOpen(false);
+              }}
+            >
+              Restaurar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

@@ -15,7 +15,7 @@ export function exportJson(state: AppState) {
 export function exportCsv(state: AppState) {
   const headers = [
     "id",
-    "onda",
+    "fase",
     "prioridade",
     "acao",
     "entregavel",
@@ -48,7 +48,7 @@ export function exportHtmlSnapshot(state: AppState) {
     .map(
       (a) => `<tr>
       <td>${escapeHtml(a.id)}</td>
-      <td>${a.onda}</td>
+      <td>${a.fase}</td>
       <td>${escapeHtml(a.prioridade)}</td>
       <td>${escapeHtml(a.acao)}</td>
       <td>${escapeHtml(a.status)}</td>
@@ -81,7 +81,7 @@ export function exportHtmlSnapshot(state: AppState) {
   <table>
     <thead>
       <tr>
-        <th>ID</th><th>Onda</th><th>Prioridade</th><th>Ação</th>
+        <th>ID</th><th>Fase</th><th>Prioridade</th><th>Ação</th>
         <th>Status</th><th>Responsável</th><th>Prazo</th><th>Obs</th>
       </tr>
     </thead>

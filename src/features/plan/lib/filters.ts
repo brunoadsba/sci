@@ -2,7 +2,7 @@ import type { ActionItem, Prioridade, StatusAcao } from "../types";
 
 export interface PlanFilters {
   search: string;
-  onda: string;
+  fase: string;
   status: string;
   responsavel: string;
   prioridade: string;
@@ -15,7 +15,7 @@ export function filterActions(
   const q = filters.search.trim().toLowerCase();
 
   return actions.filter((action) => {
-    if (filters.onda !== "all" && String(action.onda) !== filters.onda) {
+    if (filters.fase !== "all" && String(action.fase) !== filters.fase) {
       return false;
     }
     if (filters.status !== "all" && action.status !== filters.status) {

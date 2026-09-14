@@ -72,7 +72,7 @@ export function ActionDetailDialog({
           <div className="flex flex-wrap gap-2">
             <StatusBadge status={action.status} />
             <PriorityBadge prioridade={action.prioridade} />
-            <span className="text-muted-foreground">Onda {action.onda}</span>
+            <span className="text-muted-foreground">Fase {action.fase}</span>
           </div>
           <div className="grid gap-1">
             <span className="text-muted-foreground">Entregável</span>
