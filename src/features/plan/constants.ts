@@ -62,7 +62,8 @@ export const PHASES: PhaseDef[] = [
 export const PHASE_MILESTONES: PhaseMilestone[] = [
   {
     fase: 1,
-    label: "Marco — Minuta v0.1 consolidada",
+    label:
+      "Marco — Lacunas documentais fechadas (Seções 3–4, organogramas 5.x, 8.8/8.9, regra do CI)",
     prazo: "D+25",
   },
 ];
