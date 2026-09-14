@@ -42,9 +42,7 @@ export function PlanProvider({ children }: { children: ReactNode }) {
     saveDraft(next);
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(() => {
-      void persistDraftThenCommit(next).then(() => {
-        toast.success("Salvo localmente", { id: "autosave", duration: 1200 });
-      });
+      void persistDraftThenCommit(next);
     }, AUTOSAVE_MS);
   }, []);
 

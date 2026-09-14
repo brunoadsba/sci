@@ -8,7 +8,9 @@ Atualizado: 2026-09-14
 - Norma: NO.S8.8.DIP.01
 - Single-user, free, hospedagem Vercel
 - Origem: protótipo `reference/sci.html` (antes `sci.html` monolítico ~3.4k linhas)
-- Remoto: https://github.com/brunoadsba/sci.git (estava vazio no início)
+- Remoto: https://github.com/brunoadsba/sci.git
+- Produção: https://sci-plan.vercel.app
+- Projeto Vercel: `sci-plan` (team brunos-projects-26abb09d)
 
 ## Stack
 
