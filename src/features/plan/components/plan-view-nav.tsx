@@ -35,35 +35,36 @@ interface PlanViewNavProps {
 
 export function PlanViewNav({ view, onChange }: PlanViewNavProps) {
   return (
-    <div className="relative print:hidden">
-      <nav
-        className="flex gap-1 overflow-x-auto overscroll-x-contain rounded-xl border bg-card/90 p-1 shadow-sm snap-x snap-mandatory [mask-image:linear-gradient(to_right,black_85%,transparent)] sm:[mask-image:none]"
-        aria-label="Modos de visualização"
-      >
-        {VALID_VIEWS.map((item) => {
-          const Icon = VIEW_ICONS[item];
-          const active = view === item;
-          return (
-            <Button
-              key={item}
-              type="button"
-              size="sm"
-              variant={active ? "default" : "ghost"}
-              className={cn(
-                "h-10 min-h-10 shrink-0 snap-start gap-1.5 px-3 sm:h-9",
-                active && "pointer-events-none shadow-sm"
-              )}
-              aria-current={active ? "page" : undefined}
-              aria-pressed={active}
-              onClick={() => onChange(item)}
-            >
-              <Icon className="size-4 shrink-0" aria-hidden />
-              <span className="sm:hidden">{VIEW_SHORT[item]}</span>
-              <span className="hidden sm:inline">{VIEW_LABELS[item]}</span>
-            </Button>
-          );
-        })}
-      </nav>
-    </div>
+    <nav
+      className="grid grid-cols-5 gap-0.5 rounded-xl border bg-card/90 p-1 shadow-sm print:hidden sm:flex sm:gap-1 sm:overflow-x-auto"
+      aria-label="Modos de visualização"
+    >
+      {VALID_VIEWS.map((item) => {
+        const Icon = VIEW_ICONS[item];
+        const active = view === item;
+        return (
+          <Button
+            key={item}
+            type="button"
+            size="sm"
+            variant={active ? "default" : "ghost"}
+            className={cn(
+              "h-11 min-w-0 flex-col gap-0.5 px-1 text-[10px] leading-tight sm:h-9 sm:min-w-0 sm:flex-1 sm:flex-row sm:gap-1.5 sm:px-3 sm:text-sm",
+              active && "pointer-events-none shadow-sm"
+            )}
+            aria-label={VIEW_LABELS[item]}
+            aria-current={active ? "page" : undefined}
+            aria-pressed={active}
+            onClick={() => onChange(item)}
+          >
+            <Icon className="size-4 shrink-0" aria-hidden />
+            <span className="truncate sm:hidden">{VIEW_SHORT[item]}</span>
+            <span className="hidden truncate sm:inline">
+              {VIEW_LABELS[item]}
+            </span>
+          </Button>
+        );
+      })}
+    </nav>
   );
 }

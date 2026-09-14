@@ -63,9 +63,10 @@ Atualizado: 2026-09-14
 - **Home** = Visão geral (`dashboard`)
 - Navegação: logo CODEBA, breadcrumb “Plano” e seta voltar → Visão geral (filtros preservados)
 - Switcher: ícones Lucide; mobile labels `Visão` / `Quadro` / `Lista` / `Cron.` / `Log` + fade de scroll
-- Header: título mobile `SCI/EOR · CODEBA`; logo com fundo `card`/`muted` (dark-friendly)
-- Legenda SCI/EOR sob o título (mobile e desktop) e no hero da Visão geral
-- Visão geral: hero + KPIs **antes** dos filtros; filtros colapsáveis no mobile (busca + “Filtros”)
+- Header: título mobile `SCI/EOR · CODEBA`; logo dark-friendly; progresso em barra só no desktop
+- Siglas: botão ℹ no mobile (dialog); texto completo no desktop / hero `sm+`
+- Switcher mobile: grid 5 colunas (sem cortar Log); desktop flex com labels longas
+- Visão geral mobile: hero enxuto (progresso inline, CTAs 2 cols); filtros colapsáveis
 - Toolbar mobile: só tema + ⋯ (undo/redo/export no menu); desktop completo
 - Responsivo: touch ~44px, KPIs `2 / 3 / 5` cols, CTAs full-width no mobile
 - Motion: fade na troca de view; `prefers-reduced-motion` respeitado
