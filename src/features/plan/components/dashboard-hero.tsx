@@ -2,6 +2,7 @@
 
 import { AlertTriangle, Columns3, ListChecks } from "lucide-react";
 import type { ViewMode } from "../types";
+import { AcronymLegend } from "./acronym-legend";
 import { Button } from "@/components/ui/button";
 
 interface DashboardHeroProps {
@@ -38,6 +39,7 @@ export function DashboardHero({
           <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
             Acompanhamento da revisão normativa SCI/EOR
           </h2>
+          <AcronymLegend />
           <p className="max-w-2xl text-sm text-muted-foreground">
             Visão geral do plano: lacunas documentais, operacionalização e
             melhorias pós-baseline nos três portos da CODEBA.

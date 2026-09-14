@@ -89,7 +89,7 @@ export function ActionDetailDialog({
             </div>
             <div>
               <span className="text-muted-foreground">Prazo</span>
-              <p>{action.prazo}</p>
+              <p>{action.prazo || "Não definido"}</p>
             </div>
           </div>
 

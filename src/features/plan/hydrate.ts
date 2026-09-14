@@ -109,7 +109,10 @@ export function hydrate(rawState: unknown): AppState {
       return {
         ...action,
         responsavel: saved.responsavel || action.responsavel,
-        prazo: saved.prazo || action.prazo,
+        prazo:
+          typeof saved.prazo === "string" && !/^D\+\d+$/.test(saved.prazo)
+            ? saved.prazo
+            : action.prazo,
         status: sanitizeStatus(saved.status),
         obs: String(saved.obs ?? "").slice(0, 4000),
         updatedAt: saved.updatedAt,

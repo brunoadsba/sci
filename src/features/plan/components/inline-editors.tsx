@@ -69,11 +69,12 @@ export function PrazoInput({ action }: { action: ActionItem }) {
       key={`${action.id}-prazo-${action.prazo}`}
       className="h-8 min-w-[5.5rem]"
       defaultValue={action.prazo}
+      placeholder="Definir"
       aria-label={`Prazo de ${action.id}`}
       onClick={(e) => e.stopPropagation()}
       onBlur={(e) => {
         const value = e.target.value.trim();
-        if (value && value !== action.prazo) {
+        if (value !== action.prazo) {
           updateAction(action.id, { prazo: value });
         }
       }}

@@ -117,7 +117,7 @@ export function PlanToolbar() {
           type="button"
           variant="outline"
           size="icon-sm"
-          className="size-10 sm:size-8"
+          className="hidden size-8 sm:inline-flex"
           disabled={!canUndo}
           onClick={undo}
           aria-label="Desfazer"
@@ -128,7 +128,7 @@ export function PlanToolbar() {
           type="button"
           variant="outline"
           size="icon-sm"
-          className="size-10 sm:size-8"
+          className="hidden size-8 sm:inline-flex"
           disabled={!canRedo}
           onClick={redo}
           aria-label="Refazer"
@@ -138,11 +138,15 @@ export function PlanToolbar() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button type="button" variant="outline" size="sm" className="h-10 sm:h-8">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="hidden h-8 sm:inline-flex"
+            >
               <Download />
-              <span className="hidden sm:inline">Exportar</span>
-              <ChevronDown className="hidden sm:inline" />
-              <span className="sr-only sm:hidden">Exportar</span>
+              Exportar
+              <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -197,6 +201,49 @@ export function PlanToolbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              className="sm:hidden"
+              disabled={!canUndo}
+              onClick={undo}
+            >
+              <Undo2 /> Desfazer
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="sm:hidden"
+              disabled={!canRedo}
+              onClick={redo}
+            >
+              <Redo2 /> Refazer
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="sm:hidden" />
+            <DropdownMenuItem
+              className="sm:hidden"
+              onClick={() => {
+                exportJson(state);
+                toast.success("JSON exportado");
+              }}
+            >
+              <Download /> Exportar JSON
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="sm:hidden"
+              onClick={() => {
+                exportCsv(state);
+                toast.success("CSV exportado");
+              }}
+            >
+              <Download /> Exportar CSV
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="sm:hidden"
+              onClick={() => {
+                exportHtmlSnapshot(state);
+                toast.success("HTML exportado");
+              }}
+            >
+              <Download /> Exportar HTML
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="sm:hidden" />
             <DropdownMenuItem onClick={() => setOperatorOpen(true)}>
               <UserRound /> Operador: {state.user}
             </DropdownMenuItem>
@@ -244,7 +291,11 @@ export function PlanToolbar() {
             />
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOperatorOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOperatorOpen(false)}
+            >
               Cancelar
             </Button>
             <Button

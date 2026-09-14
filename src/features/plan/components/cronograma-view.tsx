@@ -38,7 +38,8 @@ export function CronogramaView({ actions, onOpen }: CronogramaViewProps) {
           />
         </div>
         <p className="text-sm text-muted-foreground">
-          Barras estimadas por fase e prazo D+N (não é Gantt de dependências).
+          Barras estimadas por fase; informe o prazo (ex.: D+30) na Lista para
+          projetar datas.
         </p>
       </div>
 
@@ -68,11 +69,13 @@ export function CronogramaView({ actions, onOpen }: CronogramaViewProps) {
                 const end =
                   days !== null
                     ? formatDate(addDays(base, days))
-                    : action.prazo;
+                    : action.prazo
+                      ? action.prazo
+                      : "sem prazo";
                 const width =
                   days !== null
                     ? Math.min(100, Math.max(8, (days / 180) * 100))
-                    : 20;
+                    : 12;
 
                 return (
                   <li key={action.id} className="grid gap-1.5">

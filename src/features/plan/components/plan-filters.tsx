@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useQueryState, parseAsString } from "nuqs";
+import { ChevronDown, Filter, ListFilter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,9 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { PHASES, PRIORITIES, STATUS_OPTIONS } from "../constants";
 import { usePlan } from "../hooks/use-plan";
 import { uniqueResponsaveis, type PlanFilters } from "../lib/filters";
+import { cn } from "@/lib/utils";
 
 export function usePlanFilters(): PlanFilters & {
   setSearch: (v: string) => void;
@@ -76,112 +79,159 @@ export function usePlanFilters(): PlanFilters & {
 export function PlanFiltersBar() {
   const { state } = usePlan();
   const filters = usePlanFilters();
+  const [open, setOpen] = useState(false);
   const responsaveis = useMemo(
     () => uniqueResponsaveis(state.actions),
     [state.actions]
   );
 
+  const activeCount = [
+    filters.fase !== "all",
+    filters.status !== "all",
+    filters.responsavel !== "all",
+    filters.prioridade !== "all",
+    Boolean(filters.search.trim()),
+  ].filter(Boolean).length;
+
   return (
     <section
-      className="grid gap-3 rounded-xl border bg-card p-3 md:grid-cols-2 lg:grid-cols-6"
+      className="grid gap-3 rounded-xl border bg-card p-3"
       aria-label="Filtros"
     >
-      <div className="grid gap-1.5 lg:col-span-2">
-        <Label htmlFor="search">Busca</Label>
-        <Input
-          id="search"
-          type="search"
-          value={filters.search}
-          onChange={(e) => void filters.setSearch(e.target.value)}
-          placeholder="ID, ação, responsável, prazo..."
-          className="h-9"
-        />
-      </div>
-
-      <div className="grid gap-1.5">
-        <Label>Fase</Label>
-        <Select
-          value={filters.fase}
-          onValueChange={(v) => void filters.setFase(v)}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+        <div className="grid min-w-0 flex-1 gap-1.5">
+          <Label htmlFor="search">Busca</Label>
+          <Input
+            id="search"
+            type="search"
+            value={filters.search}
+            onChange={(e) => void filters.setSearch(e.target.value)}
+            placeholder="Buscar…"
+            className="h-10 sm:h-9"
+            aria-label="Buscar ações"
+          />
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-10 w-full shrink-0 gap-1.5 md:hidden"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
         >
-          <SelectTrigger className="h-9 w-full">
-            <SelectValue placeholder="Todas" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todas</SelectItem>
-            {PHASES.map((phase) => (
-              <SelectItem key={phase.id} value={String(phase.id)}>
-                Fase {phase.id}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="grid gap-1.5">
-        <Label>Status</Label>
-        <Select
-          value={filters.status}
-          onValueChange={(v) => void filters.setStatus(v)}
-        >
-          <SelectTrigger className="h-9 w-full">
-            <SelectValue placeholder="Todos" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
-            {STATUS_OPTIONS.map((status) => (
-              <SelectItem key={status} value={status}>
-                {status}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="grid gap-1.5">
-        <Label>Responsável</Label>
-        <Select
-          value={filters.responsavel}
-          onValueChange={(v) => void filters.setResponsavel(v)}
-        >
-          <SelectTrigger className="h-9 w-full">
-            <SelectValue placeholder="Todos" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos</SelectItem>
-            {responsaveis.map((resp) => (
-              <SelectItem key={resp} value={resp}>
-                {resp}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="grid gap-1.5">
-        <Label>Prioridade</Label>
-        <Select
-          value={filters.prioridade}
-          onValueChange={(v) => void filters.setPrioridade(v)}
-        >
-          <SelectTrigger className="h-9 w-full">
-            <SelectValue placeholder="Todas" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todas</SelectItem>
-            {PRIORITIES.map((prio) => (
-              <SelectItem key={prio} value={prio}>
-                {prio}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="flex items-end lg:col-span-6">
-        <Button type="button" variant="outline" size="sm" onClick={filters.clear}>
-          Limpar filtros
+          <ListFilter className="size-4" />
+          Filtros
+          {activeCount > 0 && (
+            <Badge variant="secondary" className="ml-0.5 tabular-nums">
+              {activeCount}
+            </Badge>
+          )}
+          <ChevronDown
+            className={cn(
+              "size-4 opacity-60 transition-transform",
+              open && "rotate-180"
+            )}
+          />
         </Button>
+      </div>
+
+      <div
+        className={cn(
+          "grid gap-3 md:grid md:grid-cols-2 lg:grid-cols-5",
+          open ? "grid" : "hidden md:grid"
+        )}
+      >
+        <div className="grid gap-1.5">
+          <Label>Fase</Label>
+          <Select
+            value={filters.fase}
+            onValueChange={(v) => void filters.setFase(v)}
+          >
+            <SelectTrigger className="h-10 w-full sm:h-9">
+              <SelectValue placeholder="Todas" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas</SelectItem>
+              {PHASES.map((phase) => (
+                <SelectItem key={phase.id} value={String(phase.id)}>
+                  Fase {phase.id}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid gap-1.5">
+          <Label>Status</Label>
+          <Select
+            value={filters.status}
+            onValueChange={(v) => void filters.setStatus(v)}
+          >
+            <SelectTrigger className="h-10 w-full sm:h-9">
+              <SelectValue placeholder="Todos" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos</SelectItem>
+              {STATUS_OPTIONS.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {status}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid gap-1.5">
+          <Label>Responsável</Label>
+          <Select
+            value={filters.responsavel}
+            onValueChange={(v) => void filters.setResponsavel(v)}
+          >
+            <SelectTrigger className="h-10 w-full sm:h-9">
+              <SelectValue placeholder="Todos" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos</SelectItem>
+              {responsaveis.map((resp) => (
+                <SelectItem key={resp} value={resp}>
+                  {resp}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid gap-1.5">
+          <Label>Prioridade</Label>
+          <Select
+            value={filters.prioridade}
+            onValueChange={(v) => void filters.setPrioridade(v)}
+          >
+            <SelectTrigger className="h-10 w-full sm:h-9">
+              <SelectValue placeholder="Todas" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas</SelectItem>
+              {PRIORITIES.map((prio) => (
+                <SelectItem key={prio} value={prio}>
+                  {prio}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex items-end">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="h-10 w-full sm:h-9"
+            onClick={filters.clear}
+          >
+            <Filter className="size-3.5" />
+            Limpar filtros
+          </Button>
+        </div>
       </div>
     </section>
   );

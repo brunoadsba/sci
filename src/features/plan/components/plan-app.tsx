@@ -95,6 +95,7 @@ export function PlanApp() {
   }
 
   const isHome = view === "dashboard";
+  const showFilters = view !== "history";
 
   return (
     <div className="min-h-dvh bg-background">
@@ -126,7 +127,7 @@ export function PlanApp() {
           </div>
         )}
 
-        {view !== "history" && (
+        {showFilters && !isHome && (
           <div className="print:hidden">
             <PlanFiltersBar />
           </div>
@@ -141,6 +142,11 @@ export function PlanApp() {
               actions={filtered}
               onOpen={setOpenId}
               onNavigate={(next) => void changeView(next)}
+              filtersSlot={
+                <div className="print:hidden">
+                  <PlanFiltersBar />
+                </div>
+              }
             />
           )}
           {view === "table" && (

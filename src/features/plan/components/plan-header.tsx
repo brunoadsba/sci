@@ -5,6 +5,7 @@ import { ArrowLeft, ChevronRight } from "lucide-react";
 import { VIEW_LABELS } from "../constants";
 import type { ViewMode } from "../types";
 import { PlanToolbar } from "./plan-toolbar";
+import { AcronymLegend } from "./acronym-legend";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -50,7 +51,7 @@ export function PlanHeader({
             <button
               type="button"
               onClick={onHome}
-              className="shrink-0 rounded-md bg-white px-2 py-1.5 shadow-sm ring-1 ring-border/60 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="shrink-0 rounded-md bg-card px-2 py-1.5 shadow-sm ring-1 ring-border/60 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-muted"
               aria-label="Ir para Visão geral"
             >
               <Image
@@ -65,8 +66,12 @@ export function PlanHeader({
 
             <div className="min-w-0 flex-1">
               <h1 className="truncate text-base font-semibold tracking-tight sm:text-lg">
-                Plano de Ação SCI/EOR — CODEBA
+                <span className="sm:hidden">SCI/EOR · CODEBA</span>
+                <span className="hidden sm:inline">
+                  Plano de Ação SCI/EOR — CODEBA
+                </span>
               </h1>
+              <AcronymLegend className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-muted-foreground sm:line-clamp-1 sm:text-xs" />
               <nav
                 className="mt-0.5 flex min-w-0 items-center gap-1 text-xs text-muted-foreground"
                 aria-label="Localização"

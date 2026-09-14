@@ -38,6 +38,17 @@ export const VIEW_LABELS: Record<ViewMode, string> = {
   history: "Auditoria",
 };
 
+/** Expansões exibidas no header (mobile e desktop). */
+export const ACRONYM_SCI = {
+  short: "SCI",
+  long: "Sistema de Comando de Incidentes",
+} as const;
+
+export const ACRONYM_EOR = {
+  short: "EOR",
+  long: "Estrutura Organizacional de Resposta",
+} as const;
+
 export const PHASES: PhaseDef[] = [
   {
     id: 1,

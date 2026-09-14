@@ -15,7 +15,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Formalizar Grupo de Trabalho para revisão e implementação da NO.S8.8.DIP.01",
     entregavel: "Portaria, ata ou despacho DIREX/DIP constituindo o GT",
     responsavel: "DIP",
-    prazo: "D+5",
+    prazo: "",
     criterio: "GT formalmente constituído com mandato e integrantes nomeados",
   },
   {
@@ -25,7 +25,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Elaborar cronograma detalhado de revisão da norma e dos entregáveis",
     entregavel: "Cronograma com responsáveis, prazos D+N e marcos",
     responsavel: "GMAST",
-    prazo: "D+7",
+    prazo: "",
     criterio: "Cronograma aprovado pelo GT e acompanhável neste plano",
   },
   {
@@ -35,7 +35,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Preencher a Seção 3 — Definições e Siglas (hoje sem corpo textual)",
     entregavel: "Texto completo da Seção 3 na minuta da norma",
     responsavel: "GMAST",
-    prazo: "D+15",
+    prazo: "",
     criterio: "Seção 3 preenchida com termos SCI/EOR relevantes e aprovada pelo GT",
   },
   {
@@ -45,7 +45,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Preencher a Seção 4 — Documentos de Referência (item 4.1 vazio)",
     entregavel: "Lista atualizada de referências legais e técnicas (item 4.1)",
     responsavel: "GMAST + Jurídico",
-    prazo: "D+15",
+    prazo: "",
     criterio: "Seção 4/4.1 preenchida com referências válidas e aplicáveis",
   },
   {
@@ -56,7 +56,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Completar organogramas EOR de baixa e maior complexidade (itens 5.1/5.4; 5.2/5.5 vazios)",
     entregavel: "Figuras de organograma + legenda por porto (Salvador, Aratu-Candeias, Ilhéus)",
     responsavel: "GMAST + Gerência dos Portos",
-    prazo: "D+20",
+    prazo: "",
     criterio: "Itens 5.2 e 5.5 preenchidos com organogramas legíveis e consistentes com 5.3/5.6",
   },
   {
@@ -66,7 +66,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Redigir o procedimento da Seção 8.8 — Mobilização (hoje apenas título)",
     entregavel: "Texto completo do item 8.8 (fluxo, papéis, recursos e registros)",
     responsavel: "GMAST + Gerência dos Portos + CCGP",
-    prazo: "D+20",
+    prazo: "",
     criterio: "Item 8.8 redigido e aprovado pelo GT, sem placeholder",
   },
   {
@@ -76,7 +76,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Redigir o procedimento da Seção 8.9 — Desmobilização (hoje apenas título)",
     entregavel: "Texto completo do item 8.9 (critérios de encerramento e liberação)",
     responsavel: "GMAST + Gerência dos Portos",
-    prazo: "D+20",
+    prazo: "",
     criterio: "Item 8.9 redigido e aprovado pelo GT, sem placeholder",
   },
   {
@@ -87,7 +87,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Elaborar Anexo de canais oficiais de emergência citado no item 8.2",
     entregavel: "Anexo por porto com canais oficiais do CCGP",
     responsavel: "CCGP + Gerência dos Portos",
-    prazo: "D+20",
+    prazo: "",
     criterio: "Anexo publicado e referenciado no item 8.2 da minuta",
   },
   {
@@ -98,7 +98,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Sanear forma documental: lacunas 5.2/5.5, placeholder ###ª em 17.1, numeração e marcas de minuta",
     entregavel: "Minuta revisada sem inconsistências formais",
     responsavel: "GMAST + DIP",
-    prazo: "D+25",
+    prazo: "",
     criterio: "Documento sem placeholders, com numeração DIREX correta em 17.1",
   },
   {
@@ -109,7 +109,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Resolver inconsistência do Comandante do Incidente: item 6.1.a (“quando designado”) vs 16.3/16.4 (presunção)",
     entregavel: "Regra única de designação/presunção do CI na minuta",
     responsavel: "GMAST + Jurídico + Gerência dos Portos",
-    prazo: "D+25",
+    prazo: "",
     criterio: "6.1 e 16.3/16.4 harmonizados sem conflito normativo",
   },
   {
@@ -120,7 +120,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Elaborar matriz RACI das competências dos itens 6 e 7 (ownership único por função)",
     entregavel: "Matriz RACI alinhada às competências organizacionais e do SCI",
     responsavel: "GMAST",
-    prazo: "D+30",
+    prazo: "",
     criterio: "Cada função crítica com responsável único, sem sobreposição ambígua",
   },
   {
@@ -131,7 +131,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Formalizar Portarias de designação SCI/brigada e fechar texto de aprovação (16.2–16.5 e 17.1)",
     entregavel: "Minutas de Portaria DIREX + texto 17.1 com número da reunião e vigência de 90 dias",
     responsavel: "DIP + Jurídico",
-    prazo: "D+30",
+    prazo: "",
     criterio: "Textos 16.2–16.5 e 17.1 completos; portarias prontas para emissão DIREX",
   },
   {
@@ -141,7 +141,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Submeter a minuta revisada à validação jurídica",
     entregavel: "Parecer ou manifestação jurídica por escrito",
     responsavel: "Jurídico",
-    prazo: "D+30",
+    prazo: "",
     criterio: "Avaliação jurídica concluída e arquivada",
   },
 
@@ -154,7 +154,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Executar plano de distribuição e ciência conforme Seção 15.1 (evidências de cumprimento)",
     entregavel: "Registro de distribuição/intranet e ciência dos designados SCI/brigada",
     responsavel: "DIP + Comunicação",
-    prazo: "D+45",
+    prazo: "",
     criterio: "Evidências de distribuição e ciência conforme 15.1",
   },
   {
@@ -165,7 +165,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Operacionalizar classificação 5.3/5.6 com checklist CCGP e gatilhos de reclassificação (5.7)",
     entregavel: "Checklist operacional + exemplos por porto e fluxo de reclassificação",
     responsavel: "GMAST + Gerência dos Portos + CCGP + Segurança Portuária",
-    prazo: "D+45",
+    prazo: "",
     criterio: "CCGP aplica checklist alinhado a 5.3/5.6/5.7 em simulados ou ocorrências",
   },
   {
@@ -176,7 +176,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Definir canais alternativos de acionamento além do Anexo oficial do item 8.2",
     entregavel: "Procedimento de ativação redundante (falha do canal oficial)",
     responsavel: "GMAST + CCGP + TI",
-    prazo: "D+45",
+    prazo: "",
     criterio: "Canal alternativo definido, testado e documentado",
   },
   {
@@ -187,7 +187,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Complementar item 8.10 com tabela nominal de adjuntos/substitutos por função e porto",
     entregavel: "Tabela de sucessão nominal + regra de ativação por porto",
     responsavel: "GMAST + Jurídico + Gerência dos Portos",
-    prazo: "D+45",
+    prazo: "",
     criterio: "Tabela publicada com no mínimo três níveis para funções críticas do SCI",
   },
   {
@@ -198,7 +198,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Criar procedimento e checklist de transferência de comando com registro exigido em 8.10.f",
     entregavel: "Formulário/checklist de transferência com briefing e comunicação",
     responsavel: "GMAST",
-    prazo: "D+50",
+    prazo: "",
     criterio: "Procedimento aprovado e usado em simulado com registro documental",
   },
   {
@@ -209,7 +209,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Aprovar tabela de efetivo mínimo por porto e turno conforme Seção 9, IT-17 e PPCI",
     entregavel: "Tabela de dimensionamento aprovada por unidade/turno",
     responsavel: "GMAST + Gerência dos Portos + RH",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Efetivo mínimo por porto/turno aprovado e rastreável ao PPCI/IT-17",
   },
   {
@@ -220,7 +220,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Definir tempos de resposta de referência alinhados ao indicador de 14.1 e metas PCE/PAE",
     entregavel: "Metas de tempo por área/porto documentadas",
     responsavel: "GMAST + CCGP",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Tempos de resposta inicial definidos e coerentes com PCE/PAE/indicador 14.1",
   },
   {
@@ -231,7 +231,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Definir Posto de Comando (principal/alternativo) e recursos mínimos por porto",
     entregavel: "Locais, infraestrutura, checklist e responsáveis por porto",
     responsavel: "Gerência dos Portos + GMAST + Administração + TI",
-    prazo: "D+60",
+    prazo: "",
     criterio: "PC principal e alternativo definidos com checklist operacional por porto",
   },
   {
@@ -242,7 +242,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Operacionalizar plano anual de capacitação SCI (Seção 12): calendário, sucessores e registros 12.19–12.20",
     entregavel: "Plano anual + cronograma + rotina de registros GMAST/CI",
     responsavel: "GMAST + RH",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Calendário publicado; registros atualizados e disponíveis ao CI",
   },
   {
@@ -253,7 +253,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Definir frequência mínima de simulados/exercícios alinhada aos indicadores da Seção 14.1",
     entregavel: "Programa anual de exercícios SCI/PCE/PAE",
     responsavel: "GMAST",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Programa aprovado com mínimo de exercícios e critérios de avaliação",
   },
   {
@@ -264,7 +264,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Publicar matriz operacional de pesos e nota de corte a partir da Seção 10 (sem reescrever a seção)",
     entregavel: "Matriz de pontuação, corte e responsáveis do processo seletivo",
     responsavel: "GMAST + RH",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Matriz publicada e aplicável em processo seletivo documentado",
   },
   {
@@ -275,7 +275,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Publicar fluxo de aptidão física e mental (Seção 11 / IT-17 / PCMSO–NR-07)",
     entregavel: "Fluxo de avaliação médica/ocupacional e critérios de aptidão mental (11.5)",
     responsavel: "GMAST + Saúde Ocupacional",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Fluxo aprovado, compatível com IT-17, NR-07/PCMSO e itens 11.1–11.5",
   },
   {
@@ -286,7 +286,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Selecionar subset de formulários SCI/IBAMA aplicáveis por nível de complexidade (Seção 13)",
     entregavel: "Lista de formulários obrigatórios/opcionais por baixa e maior complexidade",
     responsavel: "GMAST",
-    prazo: "D+60",
+    prazo: "",
     criterio: "Lista publicada e disponível às equipes do SCI",
   },
   {
@@ -297,7 +297,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Implementar coleta e rotina dos indicadores da tabela 14.1 e ações corretivas (14.2)",
     entregavel: "Painel/rotina de coleta + relatório periódico de prontidão",
     responsavel: "GMAST",
-    prazo: "D+75",
+    prazo: "",
     criterio: "Indicadores com responsável, periodicidade e evidência de coleta; 14.2 aplicado quando meta não atingida",
   },
   {
@@ -308,7 +308,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Criar procedimento de Análise Pós-Ação (AAR) alinhado às ações corretivas pós-simulados (14.1)",
     entregavel: "Modelo de AAR e fluxo de ações corretivas com prazo",
     responsavel: "GMAST + Qualidade",
-    prazo: "D+75",
+    prazo: "",
     criterio: "Procedimento aprovado e vinculado ao indicador de cumprimento de ações corretivas",
   },
   {
@@ -318,7 +318,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Validar a minuta operacionalizada com as equipes dos três portos",
     entregavel: "Atas de reuniões técnicas e consolidação de contribuições",
     responsavel: "Gerência dos Portos",
-    prazo: "D+85",
+    prazo: "",
     criterio: "Contribuições dos três portos registradas e tratadas pelo GT",
   },
   {
@@ -328,7 +328,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
     acao: "Realizar exercício de mesa ou simulado de validação do SCI/EOR",
     entregavel: "Relatório de validação operacional com pontos fortes e oportunidades",
     responsavel: "GMAST + Gerência dos Portos",
-    prazo: "D+90",
+    prazo: "",
     criterio: "Simulado executado com relatório e ações corretivas rastreadas",
   },
 
@@ -341,7 +341,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Elaborar matriz de interfaces do SCI com PAM, PEI, PSP, PCE, PAE e PCN (já citados na norma)",
     entregavel: "Matriz de integração com gatilhos e responsáveis",
     responsavel: "GMAST",
-    prazo: "D+150",
+    prazo: "",
     criterio: "Interfaces e gatilhos documentados entre SCI e planos existentes",
   },
   {
@@ -352,7 +352,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Incluir protocolo de incidentes com múltiplas vítimas (melhoria pós-baseline; cenário citado em 5.6.e)",
     entregavel: "Protocolo de IMV com triagem e fluxo de atendimento",
     responsavel: "GMAST + Saúde",
-    prazo: "D+150",
+    prazo: "",
     criterio: "Protocolo aprovado como anexo ou revisão da norma",
   },
   {
@@ -363,7 +363,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Incluir diretrizes de preservação de cena (melhoria pós-baseline; não é lacuna literal da Rev. 0)",
     entregavel: "Diretrizes para preservação e cadeia de evidência",
     responsavel: "GMAST + Jurídico + Segurança Portuária",
-    prazo: "D+150",
+    prazo: "",
     criterio: "Diretrizes aprovadas e divulgadas às equipes do SCI",
   },
   {
@@ -374,7 +374,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Incluir contingência para falha de sistemas/infra de TI do CCGP (melhoria pós-baseline)",
     entregavel: "Procedimento de modo degradado e recuperação",
     responsavel: "GMAST + TI + CCGP",
-    prazo: "D+150",
+    prazo: "",
     criterio: "Procedimento aprovado e testado em exercício de mesa",
   },
   {
@@ -385,7 +385,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Definir protocolo de acionamento externo (CBM-BA, Marinha, SAMU, Defesa Civil) a partir de 5.6",
     entregavel: "Matriz/protocolo de interoperabilidade e comunicação",
     responsavel: "GMAST + Segurança Portuária",
-    prazo: "D+180",
+    prazo: "",
     criterio: "Protocolo aprovado com contatos, gatilhos e responsáveis",
   },
   {
@@ -396,7 +396,7 @@ export const INITIAL_ACTIONS: ActionSeed[] = [
       "Estabelecer ciclo de revisão da norma após vigência DIREX (item 17.1) e eventos significativos",
     entregavel: "Regra de revisão periódica e gatilhos de revisão extraordinária",
     responsavel: "GMAST + DIP",
-    prazo: "D+120",
+    prazo: "",
     criterio: "Regra publicada (bienal ou após evento significativo / alteração PPCI)",
   },
 ];

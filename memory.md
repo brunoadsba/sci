@@ -32,11 +32,13 @@ Atualizado: 2026-09-14
 - Autosave **silencioso** (sem toast a cada save)
 - Boot: `#embedded-state` (HTML exportado) **vence**; senão o mais recente entre IDB / LS / draft
 - Hydrate: seed = catálogo fixo; runtime preserva `responsavel`, `prazo`, `status`, `obs`, `updatedAt`, `bloqueioMotivo`
-- Migração: campo legado `onda` → `fase`; `"Usuário local"` → `"Operador"`
+- Migração: campo legado `onda` → `fase`; `"Usuário local"` → `"Operador"`; prazos legado `D+N` do seed → vazio
 
 ## Domínio (pós-auditoria da norma)
 
 - **36 ações** em `src/features/plan/data/seed.ts` (IDs estáveis; +A-13/A-14/A-15)
+- Prazos do catálogo começam **vazios**; o operador define na Lista (hydrate limpa legado `D+N` do seed)
+- Siglas no header/hero: **SCI** = Sistema de Comando de Incidentes; **EOR** = Estrutura Organizacional de Resposta
 - Ordem do catálogo: formalização → lacunas documentais → inconsistências → operacionalização → validação → melhorias
 - **Fases** 1–3: crítica/impeditiva → operacionalização → aperfeiçoamento pós-baseline
 - Prioridade independente da fase
@@ -60,10 +62,12 @@ Atualizado: 2026-09-14
 - SPA com `?view=` (nuqs): Visão geral | Quadro | Lista | Cronograma | Auditoria
 - **Home** = Visão geral (`dashboard`)
 - Navegação: logo CODEBA, breadcrumb “Plano” e seta voltar → Visão geral (filtros preservados)
-- Switcher com ícones Lucide; mobile: labels curtas + scroll horizontal
-- Header sticky: gradiente institucional, barra de progresso, sombra ao scroll
-- Visão geral: faixa resumo (norma + progresso) + CTAs Quadro / Críticas / Lista
-- Responsivo: touch ~44px, KPIs `2 / 3 / 5` cols, CTAs full-width no mobile, toolbar compacta
+- Switcher: ícones Lucide; mobile labels `Visão` / `Quadro` / `Lista` / `Cron.` / `Log` + fade de scroll
+- Header: título mobile `SCI/EOR · CODEBA`; logo com fundo `card`/`muted` (dark-friendly)
+- Legenda SCI/EOR sob o título (mobile e desktop) e no hero da Visão geral
+- Visão geral: hero + KPIs **antes** dos filtros; filtros colapsáveis no mobile (busca + “Filtros”)
+- Toolbar mobile: só tema + ⋯ (undo/redo/export no menu); desktop completo
+- Responsivo: touch ~44px, KPIs `2 / 3 / 5` cols, CTAs full-width no mobile
 - Motion: fade na troca de view; `prefers-reduced-motion` respeitado
 - Menu ⋯: Operador, Importar JSON, Restaurar (AlertDialog)
 - Export: JSON / CSV / HTML
@@ -74,8 +78,10 @@ Atualizado: 2026-09-14
 
 - `plan-app.tsx` — orquestração
 - `plan-header.tsx` — chrome sticky / home / progresso
+- `acronym-legend.tsx` — SCI/EOR por extenso
 - `plan-view-nav.tsx` — switcher de views
-- `dashboard-hero.tsx` + `dashboard-view.tsx` — Visão geral
+- `plan-filters.tsx` — filtros colapsáveis
+- `dashboard-hero.tsx` + `dashboard-view.tsx` + `dashboard-kpi.tsx` — Visão geral
 - `plan-toolbar.tsx` — undo/redo, export, tema, ⋯
 
 ## Deploy / ops

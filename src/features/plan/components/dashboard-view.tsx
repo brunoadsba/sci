@@ -1,24 +1,26 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { PHASE_MILESTONES, PHASES } from "../constants";
 import type { ActionItem, ViewMode } from "../types";
 import { countByStatus } from "../lib/filters";
 import { PriorityBadge, StatusBadge } from "./status-badge";
 import { DashboardHero } from "./dashboard-hero";
+import { DashboardKpi } from "./dashboard-kpi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 
 interface DashboardViewProps {
   actions: ActionItem[];
   onOpen: (id: string) => void;
   onNavigate?: (view: ViewMode) => void;
+  filtersSlot?: ReactNode;
 }
 
 export function DashboardView({
   actions,
   onOpen,
   onNavigate,
+  filtersSlot,
 }: DashboardViewProps) {
   const criticasRef = useRef<HTMLDivElement>(null);
   const counts = countByStatus(actions);
@@ -55,16 +57,18 @@ export function DashboardView({
         className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
         aria-label="Indicadores"
       >
-        <Kpi title="Total" value={String(total)} />
-        <Kpi title="Concluídas" value={String(counts.Concluído)} accent />
-        <Kpi title="Bloqueadas" value={String(counts.Bloqueado)} />
-        <Kpi title="Críticas abertas" value={String(criticas.length)} warn />
-        <Kpi
+        <DashboardKpi title="Total" value={String(total)} />
+        <DashboardKpi title="Concluídas" value={String(counts.Concluído)} accent />
+        <DashboardKpi title="Bloqueadas" value={String(counts.Bloqueado)} />
+        <DashboardKpi title="Críticas abertas" value={String(criticas.length)} warn />
+        <DashboardKpi
           title="Em andamento"
           value={String(counts["Em andamento"])}
           className="col-span-2 sm:col-span-1"
         />
       </section>
+
+      {filtersSlot}
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="shadow-none">
@@ -164,36 +168,5 @@ export function DashboardView({
         </Card>
       </div>
     </div>
-  );
-}
-
-function Kpi({
-  title,
-  value,
-  accent,
-  warn,
-  className,
-}: {
-  title: string;
-  value: string;
-  accent?: boolean;
-  warn?: boolean;
-  className?: string;
-}) {
-  return (
-    <Card className={cn("shadow-none", className)}>
-      <CardContent className="pt-4">
-        <p className="text-xs text-muted-foreground">{title}</p>
-        <p
-          className={cn(
-            "mt-1 text-2xl font-semibold tracking-tight tabular-nums",
-            accent && "text-primary",
-            warn && Number(value) > 0 && "text-destructive"
-          )}
-        >
-          {value}
-        </p>
-      </CardContent>
-    </Card>
   );
 }
